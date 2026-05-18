@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Kapı Kontrol">
+<meta name="theme-color" content="#0a0a0f">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-512.png">
+<title>Beşiktaş Belediyesi – Kapı Kontrol Paneli</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --surface2: #1c1c28;
+    --border: #2a2a3a;
+    --accent: #e8c84a;
+    --accent2: #f0d980;
+    --text: #f0f0f5;
+    --muted: #7a7a9a;
+    --success: #4ade80;
+    --danger: #f87171;
+    --warning: #fb923c;
+    --radius: 14px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--text); font-family:'Inter',sans-serif; min-height:100vh; display:flex; flex-direction:column; }
+
+  header {
+    background:linear-gradient(135deg,#0a0a0f,#16162a);
+    border-bottom:1px solid var(--border);
+    padding:20px 40px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .logo-area { display:flex; align-items:center; gap:16px; }
+  .logo-badge { width:52px; height:52px; border-radius:12px; background:linear-gradient(135deg,var(--accent),#c8a820); display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:800; color:#0a0a0f; }
+  .logo-text h1 { font-size:18px; font-weight:700; }
+  .logo-text p { font-size:12px; color:var(--muted); margin-top:2px; }
+  .live-clock { font-size:22px; font-weight:700; color:var(--accent); font-variant-numeric:tabular-nums; }
+  .back-btn { padding:9px 20px; border-radius:10px; font-size:13px; font-weight:600; cursor:pointer; border:1px solid var(--border); background:var(--surface2); color:var(--text); text-decoration:none; transition:all 0.2s; }
+  .back-btn:hover { border-color:var(--accent); color:var(--accent); }
+
+  .container { display:grid; grid-template-columns:1fr 480px; gap:24px; padding:28px 40px; flex:1; }
+
+  /* SCANNER */
+  .scanner-panel { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:28px; display:flex; flex-direction:column; gap:20px; }
+  .panel-title { font-size:15px; font-weight:700; display:flex; align-items:center; gap:8px; }
+  .panel-title span { color:var(--accent); }
+
+  #reader { border-radius:12px; overflow:hidden; min-height:300px; background:#000; }
+
+  .scanner-controls { display:flex; gap:10px; }
+  .ctrl-btn { flex:1; padding:12px; border-radius:10px; font-size:14px; font-weight:600; cursor:pointer; border:none; transition:all 0.2s; }
+  .ctrl-btn.start { background:var(--accent); color:#0a0a0f; }
+  .ctrl-btn.start:hover { background:var(--accent2); }
+  .ctrl-btn.stop { background:var(--surface2); color:var(--danger); border:1px solid rgba(248,113,113,0.3); }
+  .ctrl-btn.stop:hover { background:rgba(248,113,113,0.1); }
+
+  /* MANUAL */
+  .manual-section { border-top:1px solid var(--border); padding-top:20px; }
+  .manual-section h3 { font-size:13px; font-weight:600; color:var(--muted); margin-bottom:12px; text-transform:uppercase; letter-spacing:0.5px; }
+  .manual-input-row { display:flex; gap:8px; }
+  .manual-input { flex:1; padding:11px 16px; background:var(--bg); border:1px solid var(--border); border-radius:10px; color:var(--text); font-size:13px; font-family:'Inter',sans-serif; outline:none; transition:border-color 0.2s; }
+  .manual-input:focus { border-color:var(--accent); }
+  .manual-btn { padding:11px 20px; background:var(--accent); color:#0a0a0f; border:none; border-radius:10px; font-size:13px; font-weight:700; cursor:pointer; transition:all 0.2s; white-space:nowrap; }
+  .manual-btn:hover { background:var(--accent2); }
+
+  /* RESULT PANEL */
+  .result-panel { display:flex; flex-direction:column; gap:20px; }
+
+  /* RESULT CARD */
+  .result-card {
+    background:var(--surface); border:2px solid var(--border); border-radius:var(--radius);
+    padding:32px; display:flex; flex-direction:column; align-items:center; text-align:center;
+    min-height:280px; justify-content:center; transition:all 0.4s ease;
+  }
+  .result-card.idle { }
+  .result-card.success { border-color:var(--success); background:rgba(74,222,128,0.05); }
+  .result-card.error { border-color:var(--danger); background:rgba(248,113,113,0.05); }
+  .result-card.warning { border-color:var(--warning); background:rgba(251,146,60,0.05); }
+
+  .result-icon { font-size:64px; margin-bottom:16px; line-height:1; animation:bounce 0.5s ease; }
+  @keyframes bounce { 0%{transform:scale(0.5)} 70%{transform:scale(1.1)} 100%{transform:scale(1)} }
+  .result-status { font-size:22px; font-weight:800; margin-bottom:6px; }
+  .result-card.success .result-status { color:var(--success); }
+  .result-card.error .result-status { color:var(--danger); }
+  .result-card.warning .result-status { color:var(--warning); }
+  .result-desc { font-size:13px; color:var(--muted); }
+
+  .guest-info { margin-top:20px; width:100%; background:var(--bg); border-radius:10px; padding:16px; text-align:left; }
+  .guest-info-row { display:flex; justify-content:space-between; padding:6px 0; font-size:13px; border-bottom:1px solid var(--border); }
+  .guest-info-row:last-child { border-bottom:none; }
+  .guest-info-row .lbl { color:var(--muted); }
+  .guest-info-row .val { font-weight:600; }
+  .badge { display:inline-flex; align-items:center; gap:5px; padding:3px 10px; border-radius:20px; font-size:11px; font-weight:600; }
+  .badge.vip { background:rgba(168,85,247,0.15); color:#c084fc; }
+  .badge.press { background:rgba(56,189,248,0.15); color:#7dd3fc; }
+  .badge.staff { background:rgba(251,146,60,0.15); color:#fb923c; }
+  .badge.guest { background:rgba(148,163,184,0.15); color:#94a3b8; }
+
+  /* LOG */
+  .log-panel { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; }
+  .log-header { padding:16px 20px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; }
+  .log-header h3 { font-size:13px; font-weight:700; }
+  .log-clear { font-size:11px; color:var(--muted); cursor:pointer; background:none; border:none; font-family:'Inter',sans-serif; transition:color 0.2s; }
+  .log-clear:hover { color:var(--danger); }
+  .log-list { max-height:280px; overflow-y:auto; }
+  .log-item { padding:10px 20px; border-bottom:1px solid rgba(42,42,58,0.4); display:flex; align-items:center; gap:10px; font-size:12px; }
+  .log-item:last-child { border-bottom:none; }
+  .log-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+  .log-dot.ok { background:var(--success); }
+  .log-dot.fail { background:var(--danger); }
+  .log-dot.dup { background:var(--warning); }
+  .log-name { font-weight:600; flex:1; }
+  .log-time { color:var(--muted); }
+  .log-empty { text-align:center; padding:30px; color:var(--muted); font-size:13px; }
+
+  /* STATS */
+  .mini-stats { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; }
+  .mini-stat { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px; text-align:center; }
+  .mini-stat .val { font-size:24px; font-weight:800; }
+  .mini-stat .lbl { font-size:11px; color:var(--muted); margin-top:2px; }
+  .mini-stat.ok .val { color:var(--success); }
+  .mini-stat.fail .val { color:var(--danger); }
+  .mini-stat.dup .val { color:var(--warning); }
+
+  /* BEEP animation */
+  @keyframes pulse-border { 0%,100%{box-shadow:0 0 0 0 rgba(74,222,128,0.4)} 50%{box-shadow:0 0 0 16px rgba(74,222,128,0)} }
+  .result-card.pulse { animation:pulse-border 1s ease-out; }
+
+  /* MOBILE */
+  @media(max-width:768px) {
+    header { padding:14px 16px; }
+    .logo-text h1 { font-size:14px; }
+    .logo-text p { display:none; }
+    .live-clock { font-size:16px; }
+    .back-btn { padding:8px 12px; font-size:12px; }
+    .container { grid-template-columns:1fr; padding:16px; gap:16px; }
+    .mini-stats { grid-template-columns:1fr 1fr 1fr; }
+    .mini-stat .val { font-size:18px; }
+    .result-card { padding:24px 16px; min-height:200px; }
+    .result-icon { font-size:48px; }
+    .result-status { font-size:18px; }
+    #reader { min-height:240px; }
+    .log-list { max-height:200px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-area">
+    <div class="logo-badge">BŞ</div>
+    <div class="logo-text">
+      <h1>Beşiktaş Belediyesi</h1>
+      <p>Kapı Kontrol Paneli — Lansman 2026</p>
+    </div>
+  </div>
+  <div class="live-clock" id="clock">—</div>
+  <div style="display:flex;gap:10px;align-items:center;">
+    <a href="index.html" class="back-btn">← Yönetim Paneli</a>
+  </div>
+</header>
+
+<div class="container">
+  <!-- LEFT: SCANNER -->
+  <div class="scanner-panel">
+    <div class="panel-title"><span>📷</span> QR Kod Okuyucu</div>
+    <div id="reader"></div>
+    <div class="scanner-controls">
+      <button class="ctrl-btn start" id="btn-start" onclick="startScanner()">▶ Kamerayı Başlat</button>
+      <button class="ctrl-btn stop" id="btn-stop" onclick="stopScanner()" style="display:none">⏹ Durdur</button>
+    </div>
+
+    <div class="manual-section">
+      <h3>Manuel Davetiye No Girişi</h3>
+      <div class="manual-input-row">
+        <input class="manual-input" type="text" id="manual-id" placeholder="Örn: BBD-M7X3K9-A2B3" onkeydown="if(event.key==='Enter')checkManual()" />
+        <button class="manual-btn" onclick="checkManual()">Kontrol Et</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="result-panel">
+    <!-- MINI STATS -->
+    <div class="mini-stats">
+      <div class="mini-stat ok"><div class="val" id="ms-ok">0</div><div class="lbl">✅ Kabul</div></div>
+      <div class="mini-stat fail"><div class="val" id="ms-fail">0</div><div class="lbl">❌ Reddedildi</div></div>
+      <div class="mini-stat dup"><div class="val" id="ms-dup">0</div><div class="lbl">⚠️ Mükerrer</div></div>
+    </div>
+
+    <!-- RESULT CARD -->
+    <div class="result-card idle" id="result-card">
+      <div class="result-icon" id="res-icon">📡</div>
+      <div class="result-status" id="res-status">Tarama Bekleniyor</div>
+      <div class="result-desc" id="res-desc">Kamerayı başlatın veya davetiye numarası girin.</div>
+      <div id="guest-info-box"></div>
+    </div>
+
+    <!-- LOG -->
+    <div class="log-panel">
+      <div class="log-header">
+        <h3>📋 Giriş Kaydı</h3>
+        <button class="log-clear" onclick="clearLog()">Temizle</button>
+      </div>
+      <div class="log-list" id="log-list">
+        <div class="log-empty">Henüz kayıt yok.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+let scanner = null;
+let isScanning = false;
+let lastScanned = null;
+let scanCooldown = false;
+let sessionLog = [];
+let counters = { ok:0, fail:0, dup:0 };
+
+// Clock
+setInterval(() => {
+  document.getElementById('clock').textContent = new Date().toLocaleTimeString('tr-TR');
+}, 1000);
+
+function getGuests() {
+  return JSON.parse(localStorage.getItem('bb_guests') || '[]');
+}
+
+function saveGuests(list) {
+  localStorage.setItem('bb_guests', JSON.stringify(list));
+}
+
+function typeClass(t) {
+  const m = { VIP:'vip', Basın:'press', Personel:'staff', Misafir:'guest' };
+  return m[t] || 'guest';
+}
+
+function typeEmoji(t) {
+  const m = { VIP:'👑', Basın:'📰', Personel:'🔧', Misafir:'🎟️' };
+  return m[t] || '🎟️';
+}
+
+function updateCounters() {
+  document.getElementById('ms-ok').textContent = counters.ok;
+  document.getElementById('ms-fail').textContent = counters.fail;
+  document.getElementById('ms-dup').textContent = counters.dup;
+}
+
+function addLog(type, name, detail) {
+  sessionLog.unshift({ type, name, detail, time: new Date().toLocaleTimeString('tr-TR') });
+  const list = document.getElementById('log-list');
+  list.innerHTML = sessionLog.map(l => `
+    <div class="log-item">
+      <div class="log-dot ${l.type}"></div>
+      <div class="log-name">${l.name}</div>
+      <span style="font-size:11px;color:var(--muted)">${l.detail}</span>
+      <span class="log-time">${l.time}</span>
+    </div>
+  `).join('');
+}
+
+function clearLog() {
+  sessionLog = [];
+  document.getElementById('log-list').innerHTML = '<div class="log-empty">Henüz kayıt yok.</div>';
+}
+
+function showResult(type, icon, status, desc, guest) {
+  const card = document.getElementById('result-card');
+  card.className = 'result-card ' + type;
+  document.getElementById('res-icon').textContent = icon;
+  document.getElementById('res-status').textContent = status;
+  document.getElementById('res-desc').textContent = desc;
+
+  const box = document.getElementById('guest-info-box');
+  if (guest) {
+    box.innerHTML = `<div class="guest-info">
+      <div class="guest-info-row"><span class="lbl">Ad Soyad</span><span class="val">${guest.name}</span></div>
+      <div class="guest-info-row"><span class="lbl">Kurum</span><span class="val">${guest.org||'—'}</span></div>
+      <div class="guest-info-row"><span class="lbl">Tip</span><span class="val"><span class="badge ${typeClass(guest.type)}">${typeEmoji(guest.type)} ${guest.type}</span></span></div>
+      <div class="guest-info-row"><span class="lbl">Masa</span><span class="val">${guest.seat||'—'}</span></div>
+      <div class="guest-info-row"><span class="lbl">Davetiye No</span><span class="val" style="font-size:11px;font-family:monospace">${guest.id}</span></div>
+    </div>`;
+  } else {
+    box.innerHTML = '';
+  }
+
+  // pulse
+  setTimeout(() => { card.classList.add('pulse'); setTimeout(()=>card.classList.remove('pulse'),1000); }, 0);
+}
+
+function processCode(raw) {
+  if (scanCooldown) return;
+  scanCooldown = true;
+  setTimeout(() => scanCooldown = false, 2500);
+
+  let payload;
+  try { payload = JSON.parse(raw); } catch(e) { payload = { id: raw.trim() }; }
+
+  const id = payload.id;
+  const guests = getGuests();
+  const idx = guests.findIndex(g => g.id === id);
+
+  if (idx === -1) {
+    counters.fail++;
+    updateCounters();
+    showResult('error', '❌', 'GEÇERSİZ DAVETİYE', 'Bu QR kod sistemde kayıtlı değil!', null);
+    addLog('fail', payload.name || id, 'Kayıtsız QR');
+    playBeep('fail');
+    return;
+  }
+
+  const guest = guests[idx];
+  if (guest.checked) {
+    counters.dup++;
+    updateCounters();
+    showResult('warning', '⚠️', 'MÜKERRER GİRİŞ', `Bu davetiye daha önce kullanılmış! Giriş: ${guest.checkedAt || '—'}`, guest);
+    addLog('dup', guest.name, 'Daha önce kullanıldı');
+    playBeep('dup');
+    return;
+  }
+
+  // Mark as checked
+  guests[idx].checked = true;
+  guests[idx].checkedAt = new Date().toLocaleTimeString('tr-TR');
+  saveGuests(guests);
+
+  counters.ok++;
+  updateCounters();
+  showResult('success', '✅', 'HOŞ GELDİNİZ!', `Giriş onaylandı. İyi eğlenceler!`, guest);
+  addLog('ok', guest.name, guest.type);
+  playBeep('ok');
+}
+
+function checkManual() {
+  const val = document.getElementById('manual-id').value.trim();
+  if (!val) return;
+  processCode(val);
+  document.getElementById('manual-id').value = '';
+}
+
+function startScanner() {
+  if (isScanning) return;
+  document.getElementById('btn-start').style.display = 'none';
+  document.getElementById('btn-stop').style.display = 'flex';
+
+  scanner = new Html5Qrcode('reader');
+  Html5Qrcode.getCameras().then(cameras => {
+    const cam = cameras[cameras.length - 1]; // prefer back camera
+    scanner.start(
+      cam.id,
+      { fps: 10, qrbox: { width: 250, height: 250 } },
+      (decodedText) => processCode(decodedText),
+      (err) => {}
+    ).then(() => { isScanning = true; });
+  }).catch(err => {
+    document.getElementById('btn-start').style.display = 'flex';
+    document.getElementById('btn-stop').style.display = 'none';
+    showResult('error','📵','Kamera Erişimi Reddedildi','Tarayıcı kamera iznini kontrol edin veya manuel giriş kullanın.',null);
+  });
+}
+
+function stopScanner() {
+  if (!isScanning || !scanner) return;
+  scanner.stop().then(() => {
+    isScanning = false;
+    document.getElementById('btn-start').style.display = 'flex';
+    document.getElementById('btn-stop').style.display = 'none';
+    document.getElementById('reader').innerHTML = '';
+  });
+}
+
+function playBeep(type) {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain); gain.connect(ctx.destination);
+    if (type === 'ok') { osc.frequency.value = 880; gain.gain.value = 0.3; }
+    else if (type === 'fail') { osc.frequency.value = 220; gain.gain.value = 0.4; }
+    else { osc.frequency.value = 440; gain.gain.value = 0.2; }
+    osc.start();
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
+    osc.stop(ctx.currentTime + 0.4);
+  } catch(e) {}
+}
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').catch(() => {});
+}
+</script>
+</body>
+</html>
