@@ -2,263 +2,395 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="BB Davetiye">
-<meta name="theme-color" content="#00c4b8">
-<link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="icon-512.png">
-<title>Besiktas Belediyesi - Davetiye Yonetimi</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Besiktas Davetiye - Yonetim</title>
 <script>var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this.parsedData=[];for(var b=[],d=0,e=this.data.length;e>d;d++){var f=this.data.charCodeAt(d);f>65536?(b[0]=240|(1835008&f)>>>18,b[1]=128|(258048&f)>>>12,b[2]=128|(4032&f)>>>6,b[3]=128|63&f):f>2048?(b[0]=224|(61440&f)>>>12,b[1]=128|(4032&f)>>>6,b[2]=128|63&f):f>128?(b[0]=192|(1984&f)>>>6,b[1]=128|63&f):b[0]=f,this.parsedData=this.parsedData.concat(b)}this.parsedData.length!=this.data.length&&(this.parsedData.unshift(191),this.parsedData.unshift(187),this.parsedData.unshift(239))}function b(a,b){this.typeNumber=a,this.errorCorrectLevel=b,this.modules=null,this.moduleCount=0,this.dataCache=null,this.dataList=[]}function i(a,b){if(void 0==a.length)throw new Error(a.length+"/"+b);for(var c=0;c<a.length&&0==a[c];)c++;this.num=new Array(a.length-c+b);for(var d=0;d<a.length-c;d++)this.num[d]=a[d+c]}function j(a,b){this.totalCount=a,this.dataCount=b}function k(){this.buffer=[],this.length=0}function m(){return"undefined"!=typeof CanvasRenderingContext2D}function n(){var a=!1,b=navigator.userAgent;return/android/i.test(b)&&(a=!0,aMat=b.toString().match(/android ([0-9]\.[0-9])/i),aMat&&aMat[1]&&(a=parseFloat(aMat[1]))),a}function r(a,b){for(var c=1,e=s(a),f=0,g=l.length;g>=f;f++){var h=0;switch(b){case d.L:h=l[f][0];break;case d.M:h=l[f][1];break;case d.Q:h=l[f][2];break;case d.H:h=l[f][3]}if(h>=e)break;c++}if(c>l.length)throw new Error("Too long data");return c}function s(a){var b=encodeURI(a).toString().replace(/\%[0-9a-fA-F]{2}/g,"a");return b.length+(b.length!=a?3:0)}a.prototype={getLength:function(){return this.parsedData.length},write:function(a){for(var b=0,c=this.parsedData.length;c>b;b++)a.put(this.parsedData[b],8)}},b.prototype={addData:function(b){var c=new a(b);this.dataList.push(c),this.dataCache=null},isDark:function(a,b){if(0>a||this.moduleCount<=a||0>b||this.moduleCount<=b)throw new Error(a+","+b);return this.modules[a][b]},getModuleCount:function(){return this.moduleCount},make:function(){this.makeImpl(!1,this.getBestMaskPattern())},makeImpl:function(a,c){this.moduleCount=4*this.typeNumber+17,this.modules=new Array(this.moduleCount);for(var d=0;d<this.moduleCount;d++){this.modules[d]=new Array(this.moduleCount);for(var e=0;e<this.moduleCount;e++)this.modules[d][e]=null}this.setupPositionProbePattern(0,0),this.setupPositionProbePattern(this.moduleCount-7,0),this.setupPositionProbePattern(0,this.moduleCount-7),this.setupPositionAdjustPattern(),this.setupTimingPattern(),this.setupTypeInfo(a,c),this.typeNumber>=7&&this.setupTypeNumber(a),null==this.dataCache&&(this.dataCache=b.createData(this.typeNumber,this.errorCorrectLevel,this.dataList)),this.mapData(this.dataCache,c)},setupPositionProbePattern:function(a,b){for(var c=-1;7>=c;c++)if(!(-1>=a+c||this.moduleCount<=a+c))for(var d=-1;7>=d;d++)-1>=b+d||this.moduleCount<=b+d||(this.modules[a+c][b+d]=c>=0&&6>=c&&(0==d||6==d)||d>=0&&6>=d&&(0==c||6==c)||c>=2&&4>=c&&d>=2&&4>=d?!0:!1)},getBestMaskPattern:function(){for(var a=0,b=0,c=0;8>c;c++){this.makeImpl(!0,c);var d=f.getLostPoint(this);(0==c||a>d)&&(a=d,b=c)}return b},createMovieClip:function(a,b,c){var d=a.createEmptyMovieClip(b,c),e=1;this.make();for(var f=0;f<this.modules.length;f++)for(var g=f*e,h=0;h<this.modules[f].length;h++){var i=h*e,j=this.modules[f][h];j&&(d.beginFill(0,100),d.moveTo(i,g),d.lineTo(i+e,g),d.lineTo(i+e,g+e),d.lineTo(i,g+e),d.endFill())}return d},setupTimingPattern:function(){for(var a=8;a<this.moduleCount-8;a++)null==this.modules[a][6]&&(this.modules[a][6]=0==a%2);for(var b=8;b<this.moduleCount-8;b++)null==this.modules[6][b]&&(this.modules[6][b]=0==b%2)},setupPositionAdjustPattern:function(){for(var a=f.getPatternPosition(this.typeNumber),b=0;b<a.length;b++)for(var c=0;c<a.length;c++){var d=a[b],e=a[c];if(null==this.modules[d][e])for(var g=-2;2>=g;g++)for(var h=-2;2>=h;h++)this.modules[d+g][e+h]=-2==g||2==g||-2==h||2==h||0==g&&0==h?!0:!1}},setupTypeNumber:function(a){for(var b=f.getBCHTypeNumber(this.typeNumber),c=0;18>c;c++){var d=!a&&1==(1&b>>c);this.modules[Math.floor(c/3)][c%3+this.moduleCount-8-3]=d}for(var c=0;18>c;c++){var d=!a&&1==(1&b>>c);this.modules[c%3+this.moduleCount-8-3][Math.floor(c/3)]=d}},setupTypeInfo:function(a,b){for(var c=this.errorCorrectLevel<<3|b,d=f.getBCHTypeInfo(c),e=0;15>e;e++){var g=!a&&1==(1&d>>e);6>e?this.modules[e][8]=g:8>e?this.modules[e+1][8]=g:this.modules[this.moduleCount-15+e][8]=g}for(var e=0;15>e;e++){var g=!a&&1==(1&d>>e);8>e?this.modules[8][this.moduleCount-e-1]=g:9>e?this.modules[8][15-e-1+1]=g:this.modules[8][15-e-1]=g}this.modules[this.moduleCount-8][8]=!a},mapData:function(a,b){for(var c=-1,d=this.moduleCount-1,e=7,g=0,h=this.moduleCount-1;h>0;h-=2)for(6==h&&h--;;){for(var i=0;2>i;i++)if(null==this.modules[d][h-i]){var j=!1;g<a.length&&(j=1==(1&a[g]>>>e));var k=f.getMask(b,d,h-i);k&&(j=!j),this.modules[d][h-i]=j,e--,-1==e&&(g++,e=7)}if(d+=c,0>d||this.moduleCount<=d){d-=c,c=-c;break}}}},b.PAD0=236,b.PAD1=17,b.createData=function(a,c,d){for(var e=j.getRSBlocks(a,c),g=new k,h=0;h<d.length;h++){var i=d[h];g.put(i.mode,4),g.put(i.getLength(),f.getLengthInBits(i.mode,a)),i.write(g)}for(var l=0,h=0;h<e.length;h++)l+=e[h].dataCount;if(g.getLengthInBits()>8*l)throw new Error("code length overflow. ("+g.getLengthInBits()+">"+8*l+")");for(g.getLengthInBits()+4<=8*l&&g.put(0,4);0!=g.getLengthInBits()%8;)g.putBit(!1);for(;;){if(g.getLengthInBits()>=8*l)break;if(g.put(b.PAD0,8),g.getLengthInBits()>=8*l)break;g.put(b.PAD1,8)}return b.createBytes(g,e)},b.createBytes=function(a,b){for(var c=0,d=0,e=0,g=new Array(b.length),h=new Array(b.length),j=0;j<b.length;j++){var k=b[j].dataCount,l=b[j].totalCount-k;d=Math.max(d,k),e=Math.max(e,l),g[j]=new Array(k);for(var m=0;m<g[j].length;m++)g[j][m]=255&a.buffer[m+c];c+=k;var n=f.getErrorCorrectPolynomial(l),o=new i(g[j],n.getLength()-1),p=o.mod(n);h[j]=new Array(n.getLength()-1);for(var m=0;m<h[j].length;m++){var q=m+p.getLength()-h[j].length;h[j][m]=q>=0?p.get(q):0}}for(var r=0,m=0;m<b.length;m++)r+=b[m].totalCount;for(var s=new Array(r),t=0,m=0;d>m;m++)for(var j=0;j<b.length;j++)m<g[j].length&&(s[t++]=g[j][m]);for(var m=0;e>m;m++)for(var j=0;j<b.length;j++)m<h[j].length&&(s[t++]=h[j][m]);return s};for(var c={MODE_NUMBER:1,MODE_ALPHA_NUM:2,MODE_8BIT_BYTE:4,MODE_KANJI:8},d={L:1,M:0,Q:3,H:2},e={PATTERN000:0,PATTERN001:1,PATTERN010:2,PATTERN011:3,PATTERN100:4,PATTERN101:5,PATTERN110:6,PATTERN111:7},f={PATTERN_POSITION_TABLE:[[],[6,18],[6,22],[6,26],[6,30],[6,34],[6,22,38],[6,24,42],[6,26,46],[6,28,50],[6,30,54],[6,32,58],[6,34,62],[6,26,46,66],[6,26,48,70],[6,26,50,74],[6,30,54,78],[6,30,56,82],[6,30,58,86],[6,34,62,90],[6,28,50,72,94],[6,26,50,74,98],[6,30,54,78,102],[6,28,54,80,106],[6,32,58,84,110],[6,30,58,86,114],[6,34,62,90,118],[6,26,50,74,98,122],[6,30,54,78,102,126],[6,26,52,78,104,130],[6,30,56,82,108,134],[6,34,60,86,112,138],[6,30,58,86,114,142],[6,34,62,90,118,146],[6,30,54,78,102,126,150],[6,24,50,76,102,128,154],[6,28,54,80,106,132,158],[6,32,58,84,110,136,162],[6,26,54,82,110,138,166],[6,30,58,86,114,142,170]],G15:1335,G18:7973,G15_MASK:21522,getBCHTypeInfo:function(a){for(var b=a<<10;f.getBCHDigit(b)-f.getBCHDigit(f.G15)>=0;)b^=f.G15<<f.getBCHDigit(b)-f.getBCHDigit(f.G15);return(a<<10|b)^f.G15_MASK},getBCHTypeNumber:function(a){for(var b=a<<12;f.getBCHDigit(b)-f.getBCHDigit(f.G18)>=0;)b^=f.G18<<f.getBCHDigit(b)-f.getBCHDigit(f.G18);return a<<12|b},getBCHDigit:function(a){for(var b=0;0!=a;)b++,a>>>=1;return b},getPatternPosition:function(a){return f.PATTERN_POSITION_TABLE[a-1]},getMask:function(a,b,c){switch(a){case e.PATTERN000:return 0==(b+c)%2;case e.PATTERN001:return 0==b%2;case e.PATTERN010:return 0==c%3;case e.PATTERN011:return 0==(b+c)%3;case e.PATTERN100:return 0==(Math.floor(b/2)+Math.floor(c/3))%2;case e.PATTERN101:return 0==b*c%2+b*c%3;case e.PATTERN110:return 0==(b*c%2+b*c%3)%2;case e.PATTERN111:return 0==(b*c%3+(b+c)%2)%2;default:throw new Error("bad maskPattern:"+a)}},getErrorCorrectPolynomial:function(a){for(var b=new i([1],0),c=0;a>c;c++)b=b.multiply(new i([1,g.gexp(c)],0));return b},getLengthInBits:function(a,b){if(b>=1&&10>b)switch(a){case c.MODE_NUMBER:return 10;case c.MODE_ALPHA_NUM:return 9;case c.MODE_8BIT_BYTE:return 8;case c.MODE_KANJI:return 8;default:throw new Error("mode:"+a)}else if(27>b)switch(a){case c.MODE_NUMBER:return 12;case c.MODE_ALPHA_NUM:return 11;case c.MODE_8BIT_BYTE:return 16;case c.MODE_KANJI:return 10;default:throw new Error("mode:"+a)}else{if(!(41>b))throw new Error("type:"+b);switch(a){case c.MODE_NUMBER:return 14;case c.MODE_ALPHA_NUM:return 13;case c.MODE_8BIT_BYTE:return 16;case c.MODE_KANJI:return 12;default:throw new Error("mode:"+a)}}},getLostPoint:function(a){for(var b=a.getModuleCount(),c=0,d=0;b>d;d++)for(var e=0;b>e;e++){for(var f=0,g=a.isDark(d,e),h=-1;1>=h;h++)if(!(0>d+h||d+h>=b))for(var i=-1;1>=i;i++)0>e+i||e+i>=b||(0!=h||0!=i)&&g==a.isDark(d+h,e+i)&&f++;f>5&&(c+=3+f-5)}for(var d=0;b-1>d;d++)for(var e=0;b-1>e;e++){var j=0;a.isDark(d,e)&&j++,a.isDark(d+1,e)&&j++,a.isDark(d,e+1)&&j++,a.isDark(d+1,e+1)&&j++,(0==j||4==j)&&(c+=3)}for(var d=0;b>d;d++)for(var e=0;b-6>e;e++)a.isDark(d,e)&&!a.isDark(d,e+1)&&a.isDark(d,e+2)&&a.isDark(d,e+3)&&a.isDark(d,e+4)&&!a.isDark(d,e+5)&&a.isDark(d,e+6)&&(c+=40);for(var e=0;b>e;e++)for(var d=0;b-6>d;d++)a.isDark(d,e)&&!a.isDark(d+1,e)&&a.isDark(d+2,e)&&a.isDark(d+3,e)&&a.isDark(d+4,e)&&!a.isDark(d+5,e)&&a.isDark(d+6,e)&&(c+=40);for(var k=0,e=0;b>e;e++)for(var d=0;b>d;d++)a.isDark(d,e)&&k++;var l=Math.abs(100*k/b/b-50)/5;return c+=10*l}},g={glog:function(a){if(1>a)throw new Error("glog("+a+")");return g.LOG_TABLE[a]},gexp:function(a){for(;0>a;)a+=255;for(;a>=256;)a-=255;return g.EXP_TABLE[a]},EXP_TABLE:new Array(256),LOG_TABLE:new Array(256)},h=0;8>h;h++)g.EXP_TABLE[h]=1<<h;for(var h=8;256>h;h++)g.EXP_TABLE[h]=g.EXP_TABLE[h-4]^g.EXP_TABLE[h-5]^g.EXP_TABLE[h-6]^g.EXP_TABLE[h-8];for(var h=0;255>h;h++)g.LOG_TABLE[g.EXP_TABLE[h]]=h;i.prototype={get:function(a){return this.num[a]},getLength:function(){return this.num.length},multiply:function(a){for(var b=new Array(this.getLength()+a.getLength()-1),c=0;c<this.getLength();c++)for(var d=0;d<a.getLength();d++)b[c+d]^=g.gexp(g.glog(this.get(c))+g.glog(a.get(d)));return new i(b,0)},mod:function(a){if(this.getLength()-a.getLength()<0)return this;for(var b=g.glog(this.get(0))-g.glog(a.get(0)),c=new Array(this.getLength()),d=0;d<this.getLength();d++)c[d]=this.get(d);for(var d=0;d<a.getLength();d++)c[d]^=g.gexp(g.glog(a.get(d))+b);return new i(c,0).mod(a)}},j.RS_BLOCK_TABLE=[[1,26,19],[1,26,16],[1,26,13],[1,26,9],[1,44,34],[1,44,28],[1,44,22],[1,44,16],[1,70,55],[1,70,44],[2,35,17],[2,35,13],[1,100,80],[2,50,32],[2,50,24],[4,25,9],[1,134,108],[2,67,43],[2,33,15,2,34,16],[2,33,11,2,34,12],[2,86,68],[4,43,27],[4,43,19],[4,43,15],[2,98,78],[4,49,31],[2,32,14,4,33,15],[4,39,13,1,40,14],[2,121,97],[2,60,38,2,61,39],[4,40,18,2,41,19],[4,40,14,2,41,15],[2,146,116],[3,58,36,2,59,37],[4,36,16,4,37,17],[4,36,12,4,37,13],[2,86,68,2,87,69],[4,69,43,1,70,44],[6,43,19,2,44,20],[6,43,15,2,44,16],[4,101,81],[1,80,50,4,81,51],[4,50,22,4,51,23],[3,36,12,8,37,13],[2,116,92,2,117,93],[6,58,36,2,59,37],[4,46,20,6,47,21],[7,42,14,4,43,15],[4,133,107],[8,59,37,1,60,38],[8,44,20,4,45,21],[12,33,11,4,34,12],[3,145,115,1,146,116],[4,64,40,5,65,41],[11,36,16,5,37,17],[11,36,12,5,37,13],[5,109,87,1,110,88],[5,65,41,5,66,42],[5,54,24,7,55,25],[11,36,12],[5,122,98,1,123,99],[7,73,45,3,74,46],[15,43,19,2,44,20],[3,45,15,13,46,16],[1,135,107,5,136,108],[10,74,46,1,75,47],[1,50,22,15,51,23],[2,42,14,17,43,15],[5,150,120,1,151,121],[9,69,43,4,70,44],[17,50,22,1,51,23],[2,42,14,19,43,15],[3,141,113,4,142,114],[3,70,44,11,71,45],[17,47,21,4,48,22],[9,39,13,16,40,14],[3,135,107,5,136,108],[3,67,41,13,68,42],[15,54,24,5,55,25],[15,43,15,10,44,16],[4,144,116,4,145,117],[17,68,42],[17,50,22,6,51,23],[19,46,16,6,47,17],[2,139,111,7,140,112],[17,74,46],[7,54,24,16,55,25],[34,37,13],[4,151,121,5,152,122],[4,75,47,14,76,48],[11,54,24,14,55,25],[16,45,15,14,46,16],[6,147,117,4,148,118],[6,73,45,14,74,46],[11,54,24,16,55,25],[30,46,16,2,47,17],[8,132,106,4,133,107],[8,75,47,13,76,48],[7,54,24,22,55,25],[22,45,15,13,46,16],[10,142,114,2,143,115],[19,74,46,4,75,47],[28,50,22,6,51,23],[33,46,16,4,47,17],[8,152,122,4,153,123],[22,73,45,3,74,46],[8,53,23,26,54,24],[12,45,15,28,46,16],[3,147,117,10,148,118],[3,73,45,23,74,46],[4,54,24,31,55,25],[11,45,15,31,46,16],[7,146,116,7,147,117],[21,73,45,7,74,46],[1,53,23,37,54,24],[19,45,15,26,46,16],[5,145,115,10,146,116],[19,75,47,10,76,48],[15,54,24,25,55,25],[23,45,15,25,46,16],[13,145,115,3,146,116],[2,74,46,29,75,47],[42,54,24,1,55,25],[23,45,15,28,46,16],[17,145,115],[10,74,46,23,75,47],[10,54,24,35,55,25],[19,45,15,35,46,16],[17,145,115,1,146,116],[14,74,46,21,75,47],[29,54,24,19,55,25],[11,45,15,46,46,16],[13,145,115,6,146,116],[14,74,46,23,75,47],[44,54,24,7,55,25],[59,46,16,1,47,17],[12,151,121,7,152,122],[12,75,47,26,76,48],[39,54,24,14,55,25],[22,45,15,41,46,16],[6,151,121,14,152,122],[6,75,47,34,76,48],[46,54,24,10,55,25],[2,45,15,64,46,16],[17,152,122,4,153,123],[29,74,46,14,75,47],[49,54,24,10,55,25],[24,45,15,46,46,16],[4,152,122,18,153,123],[13,74,46,32,75,47],[48,54,24,14,55,25],[42,45,15,32,46,16],[20,147,117,4,148,118],[40,75,47,7,76,48],[43,54,24,22,55,25],[10,45,15,67,46,16],[19,148,118,6,149,119],[18,75,47,31,76,48],[34,54,24,34,55,25],[20,45,15,61,46,16]],j.getRSBlocks=function(a,b){var c=j.getRsBlockTable(a,b);if(void 0==c)throw new Error("bad rs block @ typeNumber:"+a+"/errorCorrectLevel:"+b);for(var d=c.length/3,e=[],f=0;d>f;f++)for(var g=c[3*f+0],h=c[3*f+1],i=c[3*f+2],k=0;g>k;k++)e.push(new j(h,i));return e},j.getRsBlockTable=function(a,b){switch(b){case d.L:return j.RS_BLOCK_TABLE[4*(a-1)+0];case d.M:return j.RS_BLOCK_TABLE[4*(a-1)+1];case d.Q:return j.RS_BLOCK_TABLE[4*(a-1)+2];case d.H:return j.RS_BLOCK_TABLE[4*(a-1)+3];default:return void 0}},k.prototype={get:function(a){var b=Math.floor(a/8);return 1==(1&this.buffer[b]>>>7-a%8)},put:function(a,b){for(var c=0;b>c;c++)this.putBit(1==(1&a>>>b-c-1))},getLengthInBits:function(){return this.length},putBit:function(a){var b=Math.floor(this.length/8);this.buffer.length<=b&&this.buffer.push(0),a&&(this.buffer[b]|=128>>>this.length%8),this.length++}};var l=[[17,14,11,7],[32,26,20,14],[53,42,32,24],[78,62,46,34],[106,84,60,44],[134,106,74,58],[154,122,86,64],[192,152,108,84],[230,180,130,98],[271,213,151,119],[321,251,177,137],[367,287,203,155],[425,331,241,177],[458,362,258,194],[520,412,292,220],[586,450,322,250],[644,504,364,280],[718,560,394,310],[792,624,442,338],[858,666,482,382],[929,711,509,403],[1003,779,565,439],[1091,857,611,461],[1171,911,661,511],[1273,997,715,535],[1367,1059,751,593],[1465,1125,805,625],[1528,1190,868,658],[1628,1264,908,698],[1732,1370,982,742],[1840,1452,1030,790],[1952,1538,1112,842],[2068,1628,1168,898],[2188,1722,1228,958],[2303,1809,1283,983],[2431,1911,1351,1051],[2563,1989,1423,1093],[2699,2099,1499,1139],[2809,2213,1579,1219],[2953,2331,1663,1273]],o=function(){var a=function(a,b){this._el=a,this._htOption=b};return a.prototype.draw=function(a){function g(a,b){var c=document.createElementNS("http://www.w3.org/2000/svg",a);for(var d in b)b.hasOwnProperty(d)&&c.setAttribute(d,b[d]);return c}var b=this._htOption,c=this._el,d=a.getModuleCount();Math.floor(b.width/d),Math.floor(b.height/d),this.clear();var h=g("svg",{viewBox:"0 0 "+String(d)+" "+String(d),width:"100%",height:"100%",fill:b.colorLight});h.setAttributeNS("http://www.w3.org/2000/xmlns/","xmlns:xlink","http://www.w3.org/1999/xlink"),c.appendChild(h),h.appendChild(g("rect",{fill:b.colorDark,width:"1",height:"1",id:"template"}));for(var i=0;d>i;i++)for(var j=0;d>j;j++)if(a.isDark(i,j)){var k=g("use",{x:String(i),y:String(j)});k.setAttributeNS("http://www.w3.org/1999/xlink","href","#template"),h.appendChild(k)}},a.prototype.clear=function(){for(;this._el.hasChildNodes();)this._el.removeChild(this._el.lastChild)},a}(),p="svg"===document.documentElement.tagName.toLowerCase(),q=p?o:m()?function(){function a(){this._elImage.src=this._elCanvas.toDataURL("image/png"),this._elImage.style.display="block",this._elCanvas.style.display="none"}function d(a,b){var c=this;if(c._fFail=b,c._fSuccess=a,null===c._bSupportDataURI){var d=document.createElement("img"),e=function(){c._bSupportDataURI=!1,c._fFail&&_fFail.call(c)},f=function(){c._bSupportDataURI=!0,c._fSuccess&&c._fSuccess.call(c)};return d.onabort=e,d.onerror=e,d.onload=f,d.src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==",void 0}c._bSupportDataURI===!0&&c._fSuccess?c._fSuccess.call(c):c._bSupportDataURI===!1&&c._fFail&&c._fFail.call(c)}if(this._android&&this._android<=2.1){var b=1/window.devicePixelRatio,c=CanvasRenderingContext2D.prototype.drawImage;CanvasRenderingContext2D.prototype.drawImage=function(a,d,e,f,g,h,i,j){if("nodeName"in a&&/img/i.test(a.nodeName))for(var l=arguments.length-1;l>=1;l--)arguments[l]=arguments[l]*b;else"undefined"==typeof j&&(arguments[1]*=b,arguments[2]*=b,arguments[3]*=b,arguments[4]*=b);c.apply(this,arguments)}}var e=function(a,b){this._bIsPainted=!1,this._android=n(),this._htOption=b,this._elCanvas=document.createElement("canvas"),this._elCanvas.width=b.width,this._elCanvas.height=b.height,a.appendChild(this._elCanvas),this._el=a,this._oContext=this._elCanvas.getContext("2d"),this._bIsPainted=!1,this._elImage=document.createElement("img"),this._elImage.style.display="none",this._el.appendChild(this._elImage),this._bSupportDataURI=null};return e.prototype.draw=function(a){var b=this._elImage,c=this._oContext,d=this._htOption,e=a.getModuleCount(),f=d.width/e,g=d.height/e,h=Math.round(f),i=Math.round(g);b.style.display="none",this.clear();for(var j=0;e>j;j++)for(var k=0;e>k;k++){var l=a.isDark(j,k),m=k*f,n=j*g;c.strokeStyle=l?d.colorDark:d.colorLight,c.lineWidth=1,c.fillStyle=l?d.colorDark:d.colorLight,c.fillRect(m,n,f,g),c.strokeRect(Math.floor(m)+.5,Math.floor(n)+.5,h,i),c.strokeRect(Math.ceil(m)-.5,Math.ceil(n)-.5,h,i)}this._bIsPainted=!0},e.prototype.makeImage=function(){this._bIsPainted&&d.call(this,a)},e.prototype.isPainted=function(){return this._bIsPainted},e.prototype.clear=function(){this._oContext.clearRect(0,0,this._elCanvas.width,this._elCanvas.height),this._bIsPainted=!1},e.prototype.round=function(a){return a?Math.floor(1e3*a)/1e3:a},e}():function(){var a=function(a,b){this._el=a,this._htOption=b};return a.prototype.draw=function(a){for(var b=this._htOption,c=this._el,d=a.getModuleCount(),e=Math.floor(b.width/d),f=Math.floor(b.height/d),g=['<table style="border:0;border-collapse:collapse;">'],h=0;d>h;h++){g.push("<tr>");for(var i=0;d>i;i++)g.push('<td style="border:0;border-collapse:collapse;padding:0;margin:0;width:'+e+"px;height:"+f+"px;background-color:"+(a.isDark(h,i)?b.colorDark:b.colorLight)+';"></td>');g.push("</tr>")}g.push("</table>"),c.innerHTML=g.join("");var j=c.childNodes[0],k=(b.width-j.offsetWidth)/2,l=(b.height-j.offsetHeight)/2;k>0&&l>0&&(j.style.margin=l+"px "+k+"px")},a.prototype.clear=function(){this._el.innerHTML=""},a}();QRCode=function(a,b){if(this._htOption={width:256,height:256,typeNumber:4,colorDark:"#000000",colorLight:"#ffffff",correctLevel:d.H},"string"==typeof b&&(b={text:b}),b)for(var c in b)this._htOption[c]=b[c];"string"==typeof a&&(a=document.getElementById(a)),this._android=n(),this._el=a,this._oQRCode=null,this._oDrawing=new q(this._el,this._htOption),this._htOption.text&&this.makeCode(this._htOption.text)},QRCode.prototype.makeCode=function(a){this._oQRCode=new b(r(a,this._htOption.correctLevel),this._htOption.correctLevel),this._oQRCode.addData(a),this._oQRCode.make(),this._el.title=a,this._oDrawing.draw(this._oQRCode),this.makeImage()},QRCode.prototype.makeImage=function(){"function"==typeof this._oDrawing.makeImage&&(!this._android||this._android>=3)&&this._oDrawing.makeImage()},QRCode.prototype.clear=function(){this._oDrawing.clear()},QRCode.CorrectLevel=d}();</script>
 <style>
-:root{--bg:#060e0e;--sf:#0d1c1c;--sf2:#122222;--brd:#1a3232;--ac:#00c4b8;--ac2:#00e8d8;--tx:#eefafa;--mt:#5a8888;--ok:#4ade80;--er:#f87171;--wn:#fb923c;--r:14px;}
-*{margin:0;padding:0;box-sizing:border-box;}
-body{background:var(--bg);color:var(--tx);font-family:Inter,sans-serif;min-height:100vh;}
-header{background:linear-gradient(135deg,#060e0e,#0d2020);border-bottom:1px solid var(--brd);padding:16px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
-.logo-area{display:flex;align-items:center;gap:12px;}
-.logo-badge{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--ac),#009990);display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:800;color:#fff;flex-shrink:0;}
-.logo-text h1{font-size:15px;font-weight:700;}
-.logo-text p{font-size:11px;color:var(--mt);margin-top:1px;}
-.nav-links{display:flex;gap:8px;}
-.nav-btn{padding:8px 14px;border-radius:9px;font-size:12px;font-weight:600;cursor:pointer;border:none;transition:all .2s;text-decoration:none;display:inline-flex;align-items:center;gap:6px;}
-.nav-btn.primary{background:var(--ac);color:#fff;}.nav-btn.primary:hover{background:var(--ac2);transform:translateY(-1px);}
-.nav-btn.secondary{background:var(--sf2);color:var(--tx);border:1px solid var(--brd);}.nav-btn.secondary:hover{border-color:var(--ac);color:var(--ac);}
-.stats-bar{display:flex;gap:12px;padding:18px 20px 0;flex-wrap:wrap;}
-.stat-card{background:var(--sf);border:1px solid var(--brd);border-radius:var(--r);padding:14px 16px;flex:1;min-width:110px;display:flex;align-items:center;gap:12px;transition:border-color .2s;}
-.stat-card:hover{border-color:var(--ac);}
-.stat-icon{font-size:22px;}.stat-val{font-size:22px;font-weight:800;}.stat-label{font-size:11px;color:var(--mt);margin-top:1px;}
-main{padding:18px 20px;display:grid;grid-template-columns:360px 1fr;gap:18px;}
-@media(max-width:780px){main{grid-template-columns:1fr;}}
-.panel{background:var(--sf);border:1px solid var(--brd);border-radius:var(--r);padding:20px;}
-.panel-title{font-size:14px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px;color:var(--ac);}
-.field{margin-bottom:13px;}
-.field label{display:block;font-size:10px;font-weight:600;color:var(--mt);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px;}
-.field input,.field select{width:100%;padding:11px 13px;background:var(--bg);border:1px solid var(--brd);border-radius:9px;color:var(--tx);font-size:14px;font-family:Inter,sans-serif;transition:border-color .2s;outline:none;}
-.field input:focus,.field select:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(0,196,184,.1);}
-.field select option{background:var(--sf2);}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.btn-create{width:100%;padding:13px;background:linear-gradient(135deg,var(--ac),#009990);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;margin-top:4px;display:flex;align-items:center;justify-content:center;gap:8px;}
-.btn-create:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,196,184,.3);}
-.btn-create:active{transform:scale(.97);}
-/* QR POPUP */
-.qr-preview{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);z-index:1000;align-items:center;justify-content:center;padding:16px;}
-.qr-preview.open{display:flex;}
-.qr-card{background:var(--sf);border:1px solid var(--brd);border-radius:20px;padding:24px 20px;max-width:360px;width:100%;text-align:center;animation:popIn .3s cubic-bezier(.34,1.56,.64,1);}
-@keyframes popIn{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
-.qr-card h2{font-size:17px;font-weight:700;margin-bottom:3px;}
-.qr-card .qr-sub{color:var(--mt);font-size:12px;margin-bottom:6px;}
-.qr-role{display:inline-block;padding:3px 12px;border-radius:20px;background:rgba(0,196,184,.15);color:var(--ac);font-size:11px;font-weight:600;margin-bottom:14px;}
-#qr-container{background:#fff;padding:12px;border-radius:10px;display:inline-block;margin-bottom:12px;min-width:180px;min-height:180px;}
-#qr-container canvas,#qr-container img{display:block !important;}
-.pin-box{background:var(--bg);border:1px solid var(--brd);border-radius:10px;padding:10px 14px;margin-bottom:14px;}
-.pin-label{font-size:10px;color:var(--mt);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;}
-.pin-code{font-size:28px;font-weight:800;letter-spacing:8px;color:var(--ac);font-family:monospace;}
-.qr-actions{display:flex;gap:8px;justify-content:center;}
-.qr-btn{padding:10px 16px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .2s;}
-.qr-btn.dl{background:var(--ac);color:#fff;}.qr-btn.dl:hover{background:var(--ac2);}
-.qr-btn.cls{background:var(--sf2);color:var(--tx);border:1px solid var(--brd);}.qr-btn.cls:hover{border-color:var(--er);color:var(--er);}
-/* LIST */
-.list-panel{background:var(--sf);border:1px solid var(--brd);border-radius:var(--r);overflow:hidden;}
-.list-header{padding:14px 18px;border-bottom:1px solid var(--brd);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
-.list-header-title{font-size:14px;font-weight:700;}
-.search-box{padding:8px 13px;background:var(--bg);border:1px solid var(--brd);border-radius:8px;color:var(--tx);font-size:13px;font-family:Inter,sans-serif;outline:none;width:190px;transition:border-color .2s;}
-.search-box:focus{border-color:var(--ac);}
-table{width:100%;border-collapse:collapse;}
-th{padding:10px 14px;text-align:left;font-size:10px;font-weight:600;color:var(--mt);text-transform:uppercase;letter-spacing:.6px;border-bottom:1px solid var(--brd);background:var(--bg);}
-td{padding:12px 14px;font-size:13px;border-bottom:1px solid rgba(26,50,50,.5);vertical-align:middle;}
-tr:last-child td{border-bottom:none;}
-tr:hover td{background:rgba(0,196,184,.03);}
-.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600;}
-.badge.checked{background:rgba(74,222,128,.12);color:var(--ok);}.badge.pending{background:rgba(0,196,184,.12);color:var(--ac);}
-.badge.vip{background:rgba(168,85,247,.15);color:#c084fc;}.badge.press{background:rgba(56,189,248,.15);color:#7dd3fc;}
-.badge.staff{background:rgba(251,146,60,.15);color:var(--wn);}.badge.guest{background:rgba(148,163,184,.15);color:#94a3b8;}
-.pin-cell{font-family:monospace;font-weight:700;color:var(--ac);letter-spacing:3px;font-size:14px;}
-.action-btns{display:flex;gap:5px;}
-.action-btn{padding:5px 10px;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer;border:none;transition:all .2s;}
-.action-btn.show{background:rgba(0,196,184,.1);color:var(--ac);border:1px solid rgba(0,196,184,.2);}.action-btn.show:hover{background:rgba(0,196,184,.2);}
-.action-btn.del{background:rgba(248,113,113,.1);color:var(--er);border:1px solid rgba(248,113,113,.2);}.action-btn.del:hover{background:rgba(248,113,113,.2);}
-.empty-state{text-align:center;padding:50px 20px;color:var(--mt);}
-.empty-icon{font-size:44px;margin-bottom:10px;}
-.toast{position:fixed;bottom:24px;right:16px;left:16px;max-width:360px;margin:0 auto;z-index:9999;background:var(--sf2);border:1px solid var(--brd);border-radius:11px;padding:12px 16px;font-size:13px;font-weight:500;display:flex;align-items:center;gap:8px;transform:translateY(100px);opacity:0;transition:all .4s cubic-bezier(.34,1.56,.64,1);}
-.toast.show{transform:translateY(0);opacity:1;}.toast.success{border-color:var(--ok);}.toast.error{border-color:var(--er);}
-@media(max-width:600px){th:nth-child(2),td:nth-child(2){display:none;}.stats-bar{gap:8px;}.stat-val{font-size:18px;}}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: Arial, sans-serif; background: #0a1a1a; color: #e0f0f0; min-height: 100vh; }
+
+header {
+  background: #0d2828;
+  border-bottom: 2px solid #00c4b8;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+header h1 { font-size: 18px; color: #00e8d8; }
+header a {
+  background: #00c4b8;
+  color: #000;
+  padding: 8px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.stats {
+  display: flex;
+  gap: 12px;
+  padding: 16px 20px;
+  flex-wrap: wrap;
+}
+.stat {
+  background: #0d2828;
+  border: 1px solid #1a4040;
+  border-radius: 10px;
+  padding: 14px 20px;
+  flex: 1;
+  min-width: 100px;
+  text-align: center;
+}
+.stat .n { font-size: 28px; font-weight: bold; color: #00e8d8; }
+.stat .l { font-size: 12px; color: #669090; margin-top: 2px; }
+
+.container { display: flex; gap: 16px; padding: 0 20px 20px; flex-wrap: wrap; }
+
+.form-panel {
+  background: #0d2828;
+  border: 1px solid #1a4040;
+  border-radius: 12px;
+  padding: 20px;
+  width: 320px;
+  flex-shrink: 0;
+}
+.form-panel h2 { font-size: 15px; color: #00e8d8; margin-bottom: 16px; }
+
+label { display: block; font-size: 11px; color: #669090; margin-bottom: 5px; margin-top: 12px; text-transform: uppercase; }
+input, select {
+  width: 100%;
+  padding: 10px 12px;
+  background: #081818;
+  border: 1px solid #1a4040;
+  border-radius: 8px;
+  color: #e0f0f0;
+  font-size: 14px;
+}
+input:focus, select:focus { outline: none; border-color: #00c4b8; }
+select option { background: #0d2828; }
+
+.btn-create {
+  width: 100%;
+  margin-top: 18px;
+  padding: 13px;
+  background: #00c4b8;
+  color: #000;
+  border: none;
+  border-radius: 9px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.btn-create:hover { background: #00e8d8; }
+.btn-create:active { transform: scale(0.98); }
+
+.list-panel {
+  flex: 1;
+  background: #0d2828;
+  border: 1px solid #1a4040;
+  border-radius: 12px;
+  overflow: hidden;
+  min-width: 300px;
+}
+.list-header {
+  padding: 14px 18px;
+  border-bottom: 1px solid #1a4040;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.list-header h2 { font-size: 15px; color: #00e8d8; }
+.search { padding: 7px 12px; background: #081818; border: 1px solid #1a4040; border-radius: 7px; color: #e0f0f0; font-size: 13px; width: 180px; }
+.search:focus { outline: none; border-color: #00c4b8; }
+
+table { width: 100%; border-collapse: collapse; }
+th { padding: 10px 14px; text-align: left; font-size: 11px; color: #669090; text-transform: uppercase; background: #081818; border-bottom: 1px solid #1a4040; }
+td { padding: 11px 14px; font-size: 13px; border-bottom: 1px solid #0f2828; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: rgba(0,196,184,0.05); }
+
+.pin { font-family: monospace; font-size: 15px; font-weight: bold; color: #00c4b8; letter-spacing: 3px; }
+.type-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: bold;
+}
+.t-vip { background: rgba(168,85,247,0.2); color: #c084fc; }
+.t-basin { background: rgba(56,189,248,0.2); color: #7dd3fc; }
+.t-personel { background: rgba(251,146,60,0.2); color: #fb923c; }
+.t-misafir { background: rgba(148,163,184,0.2); color: #94a3b8; }
+.status-ok { color: #4ade80; font-weight: bold; }
+.status-wait { color: #00c4b8; }
+
+.btn-qr {
+  padding: 5px 12px;
+  background: rgba(0,196,184,0.15);
+  border: 1px solid rgba(0,196,184,0.3);
+  border-radius: 6px;
+  color: #00c4b8;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-right: 4px;
+}
+.btn-qr:hover { background: rgba(0,196,184,0.3); }
+.btn-del {
+  padding: 5px 10px;
+  background: rgba(248,113,113,0.1);
+  border: 1px solid rgba(248,113,113,0.2);
+  border-radius: 6px;
+  color: #f87171;
+  font-size: 12px;
+  cursor: pointer;
+}
+.btn-del:hover { background: rgba(248,113,113,0.25); }
+
+.empty { text-align: center; padding: 50px 20px; color: #446060; font-size: 14px; }
+
+/* QR MODAL */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+}
+.modal-overlay.open { display: flex; }
+.modal-box {
+  background: #0d2828;
+  border: 1px solid #1a4040;
+  border-radius: 16px;
+  padding: 28px 24px;
+  text-align: center;
+  width: 320px;
+  max-width: 95vw;
+}
+.modal-box h2 { font-size: 18px; margin-bottom: 4px; color: #e0f0f0; }
+.modal-box .org { font-size: 13px; color: #669090; margin-bottom: 6px; }
+.modal-box .type-lbl { font-size: 12px; color: #00c4b8; background: rgba(0,196,184,0.1); padding: 3px 12px; border-radius: 12px; display: inline-block; margin-bottom: 16px; }
+#qr-box { background: #fff; padding: 12px; border-radius: 10px; display: inline-block; margin-bottom: 14px; }
+#qr-box canvas, #qr-box img { display: block !important; }
+.pin-display { background: #081818; border: 1px solid #1a4040; border-radius: 9px; padding: 10px 16px; margin-bottom: 16px; }
+.pin-display .pin-lbl { font-size: 10px; color: #669090; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+.pin-display .pin-val { font-size: 30px; font-weight: bold; color: #00e8d8; letter-spacing: 8px; font-family: monospace; }
+.modal-btns { display: flex; gap: 8px; justify-content: center; }
+.btn-dl { padding: 10px 20px; background: #00c4b8; color: #000; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 13px; }
+.btn-dl:hover { background: #00e8d8; }
+.btn-close { padding: 10px 18px; background: #1a3030; border: 1px solid #1a4040; color: #e0f0f0; border-radius: 8px; cursor: pointer; font-size: 13px; }
+.btn-close:hover { border-color: #f87171; color: #f87171; }
 </style>
 </head>
 <body>
 <header>
-  <div class="logo-area">
-    <div class="logo-badge">BB</div>
-    <div class="logo-text">
-      <h1>Besiktas Belediyesi</h1>
-      <p>Davetiye Yonetim - Lansman 2026</p>
-    </div>
-  </div>
-  <div class="nav-links">
-    <a href="scanner.html" class="nav-btn secondary">&#128247; Kapi Kontrol</a>
-    <button class="nav-btn primary" onclick="exportCSV()">&#8595; Disari Aktar</button>
-  </div>
+  <h1>Besiktas Belediyesi — Davetiye Yonetimi</h1>
+  <a href="scanner.html">Kapi Kontrol &rarr;</a>
 </header>
 
-<div class="stats-bar">
-  <div class="stat-card"><div class="stat-icon">&#127903;</div><div><div class="stat-val" id="stat-total">0</div><div class="stat-label">Toplam</div></div></div>
-  <div class="stat-card"><div class="stat-icon">&#10003;</div><div><div class="stat-val" id="stat-checked">0</div><div class="stat-label">Girdi</div></div></div>
-  <div class="stat-card"><div class="stat-icon">&#9200;</div><div><div class="stat-val" id="stat-pending">0</div><div class="stat-label">Bekliyor</div></div></div>
-  <div class="stat-card"><div class="stat-icon">&#128081;</div><div><div class="stat-val" id="stat-vip">0</div><div class="stat-label">VIP</div></div></div>
+<div class="stats">
+  <div class="stat"><div class="n" id="s-total">0</div><div class="l">Toplam</div></div>
+  <div class="stat"><div class="n" id="s-in">0</div><div class="l">Girdi</div></div>
+  <div class="stat"><div class="n" id="s-wait">0</div><div class="l">Bekliyor</div></div>
+  <div class="stat"><div class="n" id="s-vip">0</div><div class="l">VIP</div></div>
 </div>
 
-<main>
-  <div class="panel">
-    <div class="panel-title">&#10022; Yeni Davetiye Olustur</div>
-    <div class="field"><label>Ad Soyad *</label><input type="text" id="f-name" placeholder="Ornek: Ahmet Yilmaz"></div>
-    <div class="field"><label>Kurum / Unvan</label><input type="text" id="f-org" placeholder="Ornek: Belediye Baskani"></div>
-    <div class="row2">
-      <div class="field"><label>Davetli Tipi</label>
-        <select id="f-type">
-          <option value="VIP">VIP</option>
-          <option value="Basin">Basin</option>
-          <option value="Personel">Personel</option>
-          <option value="Misafir" selected>Misafir</option>
-        </select>
-      </div>
-      <div class="field"><label>Masa / Alan</label><input type="text" id="f-seat" placeholder="A-12"></div>
-    </div>
-    <div class="field"><label>E-posta</label><input type="email" id="f-email" placeholder="ornek@mail.com"></div>
-    <div class="field"><label>Telefon</label><input type="tel" id="f-phone" placeholder="+90 5XX XXX XX XX"></div>
-    <button class="btn-create" onclick="createInvite()">&#10024; Davetiye Olustur ve QR Goster</button>
+<div class="container">
+  <div class="form-panel">
+    <h2>+ Yeni Davetiye</h2>
+    <label>Ad Soyad *</label>
+    <input type="text" id="f-name" placeholder="Ornek: Ahmet Yilmaz">
+    <label>Kurum</label>
+    <input type="text" id="f-org" placeholder="Ornek: Belediye Baskanligi">
+    <label>Tip</label>
+    <select id="f-type">
+      <option value="VIP">VIP</option>
+      <option value="Basin">Basin</option>
+      <option value="Personel">Personel</option>
+      <option value="Misafir" selected>Misafir</option>
+    </select>
+    <label>Masa</label>
+    <input type="text" id="f-seat" placeholder="Ornek: A-12">
+    <button class="btn-create" onclick="createInvite()">Davetiye Olustur + QR Goster</button>
   </div>
 
   <div class="list-panel">
     <div class="list-header">
-      <div class="list-header-title">&#128203; Davetli Listesi</div>
-      <input class="search-box" type="text" placeholder="&#128269; Isim ara..." oninput="filterGuests(this.value)">
+      <h2>Davetli Listesi</h2>
+      <input class="search" type="text" placeholder="Ara..." oninput="search(this.value)">
     </div>
-    <div id="table-wrapper">
-      <div class="empty-state"><div class="empty-icon">&#127914;</div><p>Henuz davetiye olusturulmadi.</p></div>
-    </div>
+    <div id="list-body"><div class="empty">Henuz davetiye yok.</div></div>
   </div>
-</main>
+</div>
 
-<div class="qr-preview" id="qr-popup">
-  <div class="qr-card">
-    <h2 id="qr-name">-</h2>
-    <p class="qr-sub" id="qr-org">-</p>
-    <span class="qr-role" id="qr-role">-</span><br>
-    <div id="qr-container"></div>
-    <div class="pin-box">
-      <div class="pin-label">Manuel Giris PIN Kodu</div>
-      <div class="pin-code" id="qr-pin">------</div>
+<!-- QR MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal-box">
+    <h2 id="m-name"></h2>
+    <div class="org" id="m-org"></div>
+    <div class="type-lbl" id="m-type"></div>
+    <div id="qr-box"></div>
+    <div class="pin-display">
+      <div class="pin-lbl">Manuel Giris PIN Kodu</div>
+      <div class="pin-val" id="m-pin"></div>
     </div>
-    <div class="qr-actions">
-      <button class="qr-btn dl" onclick="downloadQR()">&#8595; Indir</button>
-      <button class="qr-btn cls" onclick="closeQR()">&#10005; Kapat</button>
+    <div class="modal-btns">
+      <button class="btn-dl" onclick="downloadQR()">Indir</button>
+      <button class="btn-close" onclick="closeModal()">Kapat</button>
     </div>
   </div>
 </div>
-<div class="toast" id="toast"></div>
 
 <script>
-var guests=JSON.parse(localStorage.getItem('bb_guests')||'[]');
-var currentQRGuest=null;
-function save(){localStorage.setItem('bb_guests',JSON.stringify(guests));}
-function uid(){return 'BBD-'+Date.now().toString(36).toUpperCase()+'-'+Math.random().toString(36).substr(2,4).toUpperCase();}
-function genPin(){return Math.floor(100000+Math.random()*900000).toString();}
-function typeClass(t){return({VIP:'vip',Basin:'press',Personel:'staff',Misafir:'guest'})[t]||'guest';}
-function typeLabel(t){return({VIP:'VIP',Basin:'Basin',Personel:'Personel',Misafir:'Misafir'})[t]||t;}
-function toast(msg,type){
-  type=type||'success';
-  var el=document.getElementById('toast');
-  el.className='toast '+type;
-  el.innerHTML=(type==='success'?'&#10003; ':'&#10007; ')+msg;
-  el.classList.add('show');
-  setTimeout(function(){el.classList.remove('show');},3000);
+var guests = JSON.parse(localStorage.getItem('bb_guests') || '[]');
+var activeGuest = null;
+
+function save() { localStorage.setItem('bb_guests', JSON.stringify(guests)); }
+
+function genId() {
+  return 'BBD' + Date.now().toString(36).toUpperCase() + Math.random().toString(36).substr(2,3).toUpperCase();
 }
-function updateStats(){
-  document.getElementById('stat-total').textContent=guests.length;
-  document.getElementById('stat-checked').textContent=guests.filter(function(g){return g.checked;}).length;
-  document.getElementById('stat-pending').textContent=guests.filter(function(g){return !g.checked;}).length;
-  document.getElementById('stat-vip').textContent=guests.filter(function(g){return g.type==='VIP';}).length;
+
+function genPin() {
+  return String(Math.floor(100000 + Math.random() * 900000));
 }
-function renderTable(list){
-  var wrap=document.getElementById('table-wrapper');
-  if(!list.length){wrap.innerHTML='<div class="empty-state"><div class="empty-icon">&#128269;</div><p>Sonuc bulunamadi.</p></div>';return;}
-  var rows=list.map(function(g){return '<tr>'
-    +'<td><strong>'+g.name+'</strong></td>'
-    +'<td style="color:var(--mt)">'+(g.org||'-')+'</td>'
-    +'<td><span class="badge '+typeClass(g.type)+'">'+typeLabel(g.type)+'</span></td>'
-    +'<td class="pin-cell">'+(g.pin||'------')+'</td>'
-    +'<td><span class="badge '+(g.checked?'checked':'pending')+'">'+(g.checked?'Girdi':'Bekliyor')+'</span></td>'
-    +'<td><div class="action-btns">'
-    +'<button class="action-btn show" onclick="showQR(''+g.id+'')">QR</button>'
-    +'<button class="action-btn del" onclick="deleteGuest(''+g.id+'')">Sil</button>'
-    +'</div></td></tr>';}).join('');
-  wrap.innerHTML='<table><thead><tr><th>Ad Soyad</th><th>Kurum</th><th>Tip</th><th>PIN</th><th>Durum</th><th>Islem</th></tr></thead><tbody>'+rows+'</tbody></table>';
+
+function typeClass(t) {
+  if (t === 'VIP') return 't-vip';
+  if (t === 'Basin') return 't-basin';
+  if (t === 'Personel') return 't-personel';
+  return 't-misafir';
 }
-function filterGuests(q){
-  var t=q.toLowerCase();
-  renderTable(guests.filter(function(g){return g.name.toLowerCase().indexOf(t)>=0||(g.org||'').toLowerCase().indexOf(t)>=0;}));
+
+function updateStats() {
+  document.getElementById('s-total').textContent = guests.length;
+  var inn = 0, vip = 0;
+  for (var i = 0; i < guests.length; i++) {
+    if (guests[i].checked) inn++;
+    if (guests[i].type === 'VIP') vip++;
+  }
+  document.getElementById('s-in').textContent = inn;
+  document.getElementById('s-wait').textContent = guests.length - inn;
+  document.getElementById('s-vip').textContent = vip;
 }
-function createInvite(){
-  var name=document.getElementById('f-name').value.trim();
-  if(!name){toast('Ad Soyad zorunludur!','error');return;}
-  var guest={
-    id:uid(),pin:genPin(),name:name,
-    org:document.getElementById('f-org').value.trim(),
-    type:document.getElementById('f-type').value,
-    seat:document.getElementById('f-seat').value.trim(),
-    email:document.getElementById('f-email').value.trim(),
-    phone:document.getElementById('f-phone').value.trim(),
-    checked:false,createdAt:new Date().toISOString()
+
+function renderList(list) {
+  var el = document.getElementById('list-body');
+  if (!list.length) { el.innerHTML = '<div class="empty">Davetli bulunamadi.</div>'; return; }
+  var html = '<table><thead><tr><th>Ad Soyad</th><th>PIN</th><th>Tip</th><th>Durum</th><th></th></tr></thead><tbody>';
+  for (var i = 0; i < list.length; i++) {
+    var g = list[i];
+    html += '<tr>';
+    html += '<td><strong>' + g.name + '</strong><br><span style="color:#669090;font-size:11px">' + (g.org || '') + '</span></td>';
+    html += '<td><span class="pin">' + g.pin + '</span></td>';
+    html += '<td><span class="type-badge ' + typeClass(g.type) + '">' + g.type + '</span></td>';
+    html += '<td class="' + (g.checked ? 'status-ok' : 'status-wait') + '">' + (g.checked ? 'Girdi' : 'Bekliyor') + '</td>';
+    html += '<td><button class="btn-qr" onclick="showQR(\'' + g.id + '\')">QR Goster</button><button class="btn-del" onclick="delGuest(\'' + g.id + '\')">Sil</button></td>';
+    html += '</tr>';
+  }
+  html += '</tbody></table>';
+  el.innerHTML = html;
+}
+
+function search(q) {
+  var t = q.toLowerCase();
+  var filtered = guests.filter(function(g) {
+    return g.name.toLowerCase().indexOf(t) >= 0 || (g.org || '').toLowerCase().indexOf(t) >= 0;
+  });
+  renderList(filtered);
+}
+
+function createInvite() {
+  var name = document.getElementById('f-name').value.trim();
+  if (!name) { alert('Ad Soyad girin!'); return; }
+
+  var g = {
+    id: genId(),
+    pin: genPin(),
+    name: name,
+    org: document.getElementById('f-org').value.trim(),
+    type: document.getElementById('f-type').value,
+    seat: document.getElementById('f-seat').value.trim(),
+    checked: false
   };
-  guests.unshift(guest);save();updateStats();renderTable(guests);
-  ['f-name','f-org','f-seat','f-email','f-phone'].forEach(function(id){document.getElementById(id).value='';});
-  toast(name+' icin davetiye olusturuldu!');
-  showQR(guest.id);
+
+  guests.unshift(g);
+  save();
+  updateStats();
+  renderList(guests);
+
+  document.getElementById('f-name').value = '';
+  document.getElementById('f-org').value = '';
+  document.getElementById('f-seat').value = '';
+
+  showQR(g.id);
 }
-function showQR(id){
-  var g=guests.find(function(x){return x.id===id;});
-  if(!g)return;
-  currentQRGuest=g;
-  document.getElementById('qr-name').textContent=g.name;
-  document.getElementById('qr-org').textContent=g.org||'Besiktas Belediyesi Lansman 2026';
-  document.getElementById('qr-role').textContent=typeLabel(g.type);
-  document.getElementById('qr-pin').textContent=g.pin||'------';
-  var container=document.getElementById('qr-container');
-  container.innerHTML='';
-  try{
-    var payload=JSON.stringify({id:g.id,pin:g.pin,name:g.name,type:g.type});
-    new QRCode(container,{text:payload,width:180,height:180,colorDark:'#000000',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.H});
-  }catch(e){container.innerHTML='<p style="color:red;padding:20px;font-size:12px">QR Hatasi: '+e.message+'</p>';}
-  document.getElementById('qr-popup').classList.add('open');
+
+function showQR(id) {
+  var g = null;
+  for (var i = 0; i < guests.length; i++) {
+    if (guests[i].id === id) { g = guests[i]; break; }
+  }
+  if (!g) return;
+  activeGuest = g;
+
+  document.getElementById('m-name').textContent = g.name;
+  document.getElementById('m-org').textContent = g.org || 'Besiktas Belediyesi';
+  document.getElementById('m-type').textContent = g.type;
+  document.getElementById('m-pin').textContent = g.pin;
+
+  var box = document.getElementById('qr-box');
+  box.innerHTML = '';
+
+  var data = JSON.stringify({ id: g.id, pin: g.pin, name: g.name, type: g.type });
+
+  try {
+    new QRCode(box, {
+      text: data,
+      width: 180,
+      height: 180,
+      colorDark: '#000000',
+      colorLight: '#ffffff',
+      correctLevel: QRCode.CorrectLevel.H
+    });
+  } catch(e) {
+    box.innerHTML = '<p style="color:red;padding:16px;font-size:12px">Hata: ' + e.message + '</p>';
+  }
+
+  document.getElementById('modal').classList.add('open');
 }
-function closeQR(){document.getElementById('qr-popup').classList.remove('open');}
-function downloadQR(){
-  var canvas=document.querySelector('#qr-container canvas');
-  if(!canvas){toast('QR gorsel bulunamadi','error');return;}
-  var link=document.createElement('a');
-  link.download='davetiye-'+(currentQRGuest?currentQRGuest.pin:'qr')+'.png';
-  link.href=canvas.toDataURL();link.click();
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
 }
-function deleteGuest(id){
-  if(!confirm('Bu davetiyeyi silmek istediginizden emin misiniz?'))return;
-  guests=guests.filter(function(g){return g.id!==id;});
-  save();updateStats();renderTable(guests);
-  toast('Davetiye silindi.','error');
+
+function downloadQR() {
+  var canvas = document.querySelector('#qr-box canvas');
+  if (!canvas) { alert('QR bulunamadi'); return; }
+  var a = document.createElement('a');
+  a.download = 'davetiye-' + (activeGuest ? activeGuest.pin : 'qr') + '.png';
+  a.href = canvas.toDataURL();
+  a.click();
 }
-function exportCSV(){
-  if(!guests.length){toast('Davetli yok.','error');return;}
-  var h=['ID','PIN','Ad Soyad','Kurum','Tip','Masa','E-posta','Telefon','Durum','Tarih'];
-  var r=guests.map(function(g){return[g.id,g.pin,g.name,g.org,g.type,g.seat,g.email,g.phone,g.checked?'Girdi':'Bekliyor',g.createdAt];});
-  var csv=[h].concat(r).map(function(row){return row.map(function(c){return'"'+(c||'')+'"';}).join(',');}).join('\n');
-  var blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'});
-  var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='davetliler.csv';a.click();
-  toast('CSV indirildi!');
+
+function delGuest(id) {
+  if (!confirm('Silinsin mi?')) return;
+  guests = guests.filter(function(g) { return g.id !== id; });
+  save();
+  updateStats();
+  renderList(guests);
 }
-document.getElementById('qr-popup').addEventListener('click',function(e){if(e.target===this)closeQR();});
-if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js').catch(function(){});}
-updateStats();renderTable(guests);
+
+document.getElementById('modal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+updateStats();
+renderList(guests);
 </script>
 </body>
 </html>

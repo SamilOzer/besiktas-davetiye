@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Besiktas Davetiye - Kapi Kontrol</title>
+<script>__JSQR_LIB__</script>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: Arial, sans-serif; background: #0a1a1a; color: #e0f0f0; min-height: 100vh; display: flex; flex-direction: column; }
+
+header {
+  background: #0d2828;
+  border-bottom: 2px solid #00c4b8;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+header h1 { font-size: 16px; color: #00e8d8; }
+header a {
+  background: #1a3030;
+  border: 1px solid #1a4040;
+  color: #e0f0f0;
+  padding: 7px 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 13px;
+}
+header a:hover { border-color: #00c4b8; color: #00c4b8; }
+.clock { font-size: 18px; font-weight: bold; color: #00c4b8; }
+
+.stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  padding: 14px 16px;
+}
+.stat {
+  background: #0d2828;
+  border: 1px solid #1a4040;
+  border-radius: 10px;
+  padding: 12px;
+  text-align: center;
+}
+.stat .n { font-size: 24px; font-weight: bold; }
+.stat .l { font-size: 11px; color: #669090; margin-top: 2px; }
+.stat.ok .n { color: #4ade80; }
+.stat.fail .n { color: #f87171; }
+.stat.dup .n { color: #fb923c; }
+
+.main { padding: 0 16px 16px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+
+/* RESULT CARD */
+.result {
+  background: #0d2828;
+  border: 2px solid #1a4040;
+  border-radius: 14px;
+  padding: 24px 16px;
+  text-align: center;
+  transition: border-color 0.3s, background 0.3s;
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.result.success { border-color: #4ade80; background: #071a07; }
+.result.error   { border-color: #f87171; background: #1a0707; }
+.result.warn    { border-color: #fb923c; background: #1a1007; }
+.result-icon { font-size: 52px; margin-bottom: 10px; }
+.result-title { font-size: 20px; font-weight: bold; margin-bottom: 5px; }
+.result.success .result-title { color: #4ade80; }
+.result.error   .result-title { color: #f87171; }
+.result.warn    .result-title { color: #fb923c; }
+.result-sub { font-size: 13px; color: #669090; }
+
+.guest-box {
+  margin-top: 14px;
+  background: #0a1a1a;
+  border-radius: 9px;
+  padding: 12px;
+  text-align: left;
+  width: 100%;
+}
+.guest-row { display: flex; justify-content: space-between; padding: 5px 0; font-size: 13px; border-bottom: 1px solid #1a3030; }
+.guest-row:last-child { border-bottom: none; }
+.guest-row .k { color: #669090; }
+.guest-row .v { font-weight: bold; }
+.pin-v { color: #00c4b8; font-family: monospace; letter-spacing: 3px; font-size: 15px; }
+
+/* SCAN BUTTON */
+.scan-btn {
+  width: 100%;
+  padding: 20px;
+  background: #00c4b8;
+  color: #000;
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.scan-btn:active { transform: scale(0.97); }
+#cam-input { display: none; }
+
+/* MANUAL */
+.manual {
+  background: #0d2828;
+  border: 1px solid #1a4040;
+  border-radius: 12px;
+  padding: 16px;
+}
+.manual h3 { font-size: 13px; color: #669090; margin-bottom: 10px; text-transform: uppercase; }
+.manual-row { display: flex; gap: 8px; }
+.manual-input {
+  flex: 1;
+  padding: 11px 13px;
+  background: #0a1a1a;
+  border: 1px solid #1a4040;
+  border-radius: 8px;
+  color: #e0f0f0;
+  font-size: 15px;
+}
+.manual-input:focus { outline: none; border-color: #00c4b8; }
+.manual-btn {
+  padding: 11px 18px;
+  background: #00c4b8;
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.manual-btn:active { background: #00e8d8; }
+
+/* LOG */
+.log-panel {
+  background: #0d2828;
+  border: 1px solid #1a4040;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.log-head {
+  padding: 12px 16px;
+  border-bottom: 1px solid #1a4040;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.log-head span { font-size: 13px; font-weight: bold; color: #00c4b8; }
+.log-clear { background: none; border: none; color: #669090; cursor: pointer; font-size: 12px; }
+.log-clear:hover { color: #f87171; }
+.log-items { max-height: 200px; overflow-y: auto; }
+.log-item { padding: 9px 14px; border-bottom: 1px solid #0f2828; display: flex; align-items: center; gap: 10px; font-size: 12px; }
+.log-item:last-child { border-bottom: none; }
+.dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.dot.ok   { background: #4ade80; }
+.dot.fail { background: #f87171; }
+.dot.dup  { background: #fb923c; }
+.log-name { font-weight: bold; flex: 1; }
+.log-time { color: #446060; white-space: nowrap; }
+.log-empty { text-align: center; padding: 24px; color: #446060; font-size: 12px; }
+
+/* Processing */
+.overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 999; align-items: center; justify-content: center; flex-direction: column; gap: 14px; }
+.overlay.show { display: flex; }
+.spinner { width: 44px; height: 44px; border: 4px solid #1a4040; border-top-color: #00c4b8; border-radius: 50%; animation: spin 0.7s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+<header>
+  <h1>Besiktas Belediyesi — Kapi Kontrol</h1>
+  <div class="clock" id="clock">00:00:00</div>
+  <a href="index.html">&larr; Yonetim</a>
+</header>
+
+<div class="stats">
+  <div class="stat ok"><div class="n" id="c-ok">0</div><div class="l">Kabul</div></div>
+  <div class="stat fail"><div class="n" id="c-fail">0</div><div class="l">Red</div></div>
+  <div class="stat dup"><div class="n" id="c-dup">0</div><div class="l">Mukerrer</div></div>
+</div>
+
+<div class="main">
+  <!-- RESULT -->
+  <div class="result" id="result">
+    <div class="result-icon">&#128247;</div>
+    <div class="result-title">Hazir</div>
+    <div class="result-sub">QR okumak icin asagidaki butona basin.</div>
+  </div>
+
+  <!-- CAMERA BUTTON -->
+  <button class="scan-btn" onclick="document.getElementById('cam-input').click()">
+    &#128247; Kamera ile QR Tara
+  </button>
+  <input type="file" id="cam-input" accept="image/*" capture="environment">
+
+  <!-- MANUAL -->
+  <div class="manual">
+    <h3>&#128273; PIN ile Manuel Giris</h3>
+    <div class="manual-row">
+      <input class="manual-input" id="pin-input" type="text" placeholder="6 haneli PIN girin..." maxlength="20">
+      <button class="manual-btn" onclick="checkPin()">Kontrol</button>
+    </div>
+  </div>
+
+  <!-- LOG -->
+  <div class="log-panel">
+    <div class="log-head">
+      <span>Giris Kaydi</span>
+      <button class="log-clear" onclick="clearLog()">Temizle</button>
+    </div>
+    <div class="log-items" id="log-list"><div class="log-empty">Kayit yok.</div></div>
+  </div>
+</div>
+
+<div class="overlay" id="overlay"><div class="spinner"></div><p>Okunuyor...</p></div>
+
+<script>
+var cnt = { ok: 0, fail: 0, dup: 0 };
+var logItems = [];
+
+setInterval(function() {
+  document.getElementById('clock').textContent = new Date().toLocaleTimeString('tr-TR');
+}, 1000);
+
+function getGuests() { return JSON.parse(localStorage.getItem('bb_guests') || '[]'); }
+function saveGuests(g) { localStorage.setItem('bb_guests', JSON.stringify(g)); }
+
+function updateCnt() {
+  document.getElementById('c-ok').textContent = cnt.ok;
+  document.getElementById('c-fail').textContent = cnt.fail;
+  document.getElementById('c-dup').textContent = cnt.dup;
+}
+
+function addLog(type, name, note) {
+  logItems.unshift({ type: type, name: name, note: note, time: new Date().toLocaleTimeString('tr-TR') });
+  var el = document.getElementById('log-list');
+  el.innerHTML = logItems.slice(0, 30).map(function(l) {
+    return '<div class="log-item"><div class="dot ' + l.type + '"></div><div class="log-name">' + l.name + '</div><span style="color:#669090;font-size:11px">' + l.note + '</span><span class="log-time">' + l.time + '</span></div>';
+  }).join('');
+}
+
+function clearLog() {
+  logItems = [];
+  document.getElementById('log-list').innerHTML = '<div class="log-empty">Kayit yok.</div>';
+}
+
+function showResult(type, icon, title, sub, guest) {
+  var el = document.getElementById('result');
+  el.className = 'result ' + type;
+  el.innerHTML = '<div class="result-icon">' + icon + '</div><div class="result-title">' + title + '</div><div class="result-sub">' + sub + '</div>';
+
+  if (guest) {
+    var gb = '<div class="guest-box">'
+      + '<div class="guest-row"><span class="k">Ad Soyad</span><span class="v">' + guest.name + '</span></div>'
+      + '<div class="guest-row"><span class="k">Kurum</span><span class="v">' + (guest.org || '-') + '</span></div>'
+      + '<div class="guest-row"><span class="k">Tip</span><span class="v">' + guest.type + '</span></div>'
+      + '<div class="guest-row"><span class="k">Masa</span><span class="v">' + (guest.seat || '-') + '</span></div>'
+      + '<div class="guest-row"><span class="k">PIN</span><span class="v pin-v">' + guest.pin + '</span></div>'
+      + '</div>';
+    el.innerHTML += gb;
+  }
+}
+
+function processCode(raw) {
+  var payload;
+  try { payload = JSON.parse(raw); } catch(e) { payload = { pin: raw.trim(), id: raw.trim() }; }
+
+  var guests = getGuests();
+  var idx = -1;
+
+  // Find by id first, then by pin
+  for (var i = 0; i < guests.length; i++) {
+    if (guests[i].id === payload.id || guests[i].pin === payload.pin || guests[i].pin === payload.id) {
+      idx = i; break;
+    }
+  }
+
+  if (idx === -1) {
+    cnt.fail++; updateCnt();
+    showResult('error', '&#10060;', 'GECERSIZ!', 'Bu QR veya PIN kayitli degil.', null);
+    addLog('fail', payload.name || raw.substr(0, 15), 'Kayitsiz');
+    beep('fail');
+    return;
+  }
+
+  var g = guests[idx];
+
+  if (g.checked) {
+    cnt.dup++; updateCnt();
+    showResult('warn', '&#9888;&#65039;', 'MUKERRER!', 'Bu davetiye zaten kullanildi! (' + (g.checkedAt || '-') + ')', g);
+    addLog('dup', g.name, 'Mukerrer giris');
+    beep('dup');
+    return;
+  }
+
+  guests[idx].checked = true;
+  guests[idx].checkedAt = new Date().toLocaleTimeString('tr-TR');
+  saveGuests(guests);
+
+  cnt.ok++; updateCnt();
+  showResult('success', '&#9989;', 'HOS GELDINIZ!', 'Giris onaylandi.', g);
+  addLog('ok', g.name, g.type);
+  beep('ok');
+}
+
+// Camera capture
+document.getElementById('cam-input').addEventListener('change', function(e) {
+  var file = e.target.files[0];
+  if (!file) return;
+
+  document.getElementById('overlay').classList.add('show');
+
+  var reader = new FileReader();
+  reader.onload = function(ev) {
+    var img = new Image();
+    img.onload = function() {
+      var canvas = document.createElement('canvas');
+      var w = img.width, h = img.height;
+      var max = 1200;
+      if (w > max || h > max) {
+        if (w > h) { h = Math.round(h * max / w); w = max; }
+        else { w = Math.round(w * max / h); h = max; }
+      }
+      canvas.width = w; canvas.height = h;
+      var ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, w, h);
+      var data = ctx.getImageData(0, 0, w, h);
+
+      document.getElementById('overlay').classList.remove('show');
+
+      var code = jsQR(data.data, data.width, data.height, { inversionAttempts: 'dontInvert' });
+      if (code) {
+        processCode(code.data);
+      } else {
+        showResult('error', '&#128269;', 'Okunamadi', 'QR net gorunsun ve tekrar deneyin.', null);
+      }
+      e.target.value = '';
+    };
+    img.src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+});
+
+// PIN check
+function checkPin() {
+  var val = document.getElementById('pin-input').value.trim();
+  if (!val) return;
+  processCode(val);
+  document.getElementById('pin-input').value = '';
+}
+
+document.getElementById('pin-input').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') checkPin();
+});
+
+function beep(type) {
+  try {
+    var ctx = new (window.AudioContext || window.webkitAudioContext)();
+    var osc = ctx.createOscillator();
+    var gain = ctx.createGain();
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.frequency.value = type === 'ok' ? 880 : type === 'fail' ? 220 : 440;
+    gain.gain.value = 0.3;
+    osc.start();
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.5);
+    osc.stop(ctx.currentTime + 0.5);
+  } catch(e) {}
+}
+</script>
+</body>
+</html>

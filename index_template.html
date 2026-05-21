@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Besiktas Davetiye - Yonetim</title>
+<script>__QRCODE_LIB__</script>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: Arial, sans-serif; background: #0a1a1a; color: #e0f0f0; min-height: 100vh; }
+
+header {
+  background: #0d2828;
+  border-bottom: 2px solid #00c4b8;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+header h1 { font-size: 18px; color: #00e8d8; }
+header a {
+  background: #00c4b8;
+  color: #000;
+  padding: 8px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.stats {
+  display: flex;
+  gap: 12px;
+  padding: 16px 20px;
+  flex-wrap: wrap;
+}
+.stat {
+  background: #0d2828;
+  border: 1px solid #1a4040;
+  border-radius: 10px;
+  padding: 14px 20px;
+  flex: 1;
+  min-width: 100px;
+  text-align: center;
+}
+.stat .n { font-size: 28px; font-weight: bold; color: #00e8d8; }
+.stat .l { font-size: 12px; color: #669090; margin-top: 2px; }
+
+.container { display: flex; gap: 16px; padding: 0 20px 20px; flex-wrap: wrap; }
+
+.form-panel {
+  background: #0d2828;
+  border: 1px solid #1a4040;
+  border-radius: 12px;
+  padding: 20px;
+  width: 320px;
+  flex-shrink: 0;
+}
+.form-panel h2 { font-size: 15px; color: #00e8d8; margin-bottom: 16px; }
+
+label { display: block; font-size: 11px; color: #669090; margin-bottom: 5px; margin-top: 12px; text-transform: uppercase; }
+input, select {
+  width: 100%;
+  padding: 10px 12px;
+  background: #081818;
+  border: 1px solid #1a4040;
+  border-radius: 8px;
+  color: #e0f0f0;
+  font-size: 14px;
+}
+input:focus, select:focus { outline: none; border-color: #00c4b8; }
+select option { background: #0d2828; }
+
+.btn-create {
+  width: 100%;
+  margin-top: 18px;
+  padding: 13px;
+  background: #00c4b8;
+  color: #000;
+  border: none;
+  border-radius: 9px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.btn-create:hover { background: #00e8d8; }
+.btn-create:active { transform: scale(0.98); }
+
+.list-panel {
+  flex: 1;
+  background: #0d2828;
+  border: 1px solid #1a4040;
+  border-radius: 12px;
+  overflow: hidden;
+  min-width: 300px;
+}
+.list-header {
+  padding: 14px 18px;
+  border-bottom: 1px solid #1a4040;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.list-header h2 { font-size: 15px; color: #00e8d8; }
+.search { padding: 7px 12px; background: #081818; border: 1px solid #1a4040; border-radius: 7px; color: #e0f0f0; font-size: 13px; width: 180px; }
+.search:focus { outline: none; border-color: #00c4b8; }
+
+table { width: 100%; border-collapse: collapse; }
+th { padding: 10px 14px; text-align: left; font-size: 11px; color: #669090; text-transform: uppercase; background: #081818; border-bottom: 1px solid #1a4040; }
+td { padding: 11px 14px; font-size: 13px; border-bottom: 1px solid #0f2828; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: rgba(0,196,184,0.05); }
+
+.pin { font-family: monospace; font-size: 15px; font-weight: bold; color: #00c4b8; letter-spacing: 3px; }
+.type-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: bold;
+}
+.t-vip { background: rgba(168,85,247,0.2); color: #c084fc; }
+.t-basin { background: rgba(56,189,248,0.2); color: #7dd3fc; }
+.t-personel { background: rgba(251,146,60,0.2); color: #fb923c; }
+.t-misafir { background: rgba(148,163,184,0.2); color: #94a3b8; }
+.status-ok { color: #4ade80; font-weight: bold; }
+.status-wait { color: #00c4b8; }
+
+.btn-qr {
+  padding: 5px 12px;
+  background: rgba(0,196,184,0.15);
+  border: 1px solid rgba(0,196,184,0.3);
+  border-radius: 6px;
+  color: #00c4b8;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-right: 4px;
+}
+.btn-qr:hover { background: rgba(0,196,184,0.3); }
+.btn-del {
+  padding: 5px 10px;
+  background: rgba(248,113,113,0.1);
+  border: 1px solid rgba(248,113,113,0.2);
+  border-radius: 6px;
+  color: #f87171;
+  font-size: 12px;
+  cursor: pointer;
+}
+.btn-del:hover { background: rgba(248,113,113,0.25); }
+
+.empty { text-align: center; padding: 50px 20px; color: #446060; font-size: 14px; }
+
+/* QR MODAL */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+}
+.modal-overlay.open { display: flex; }
+.modal-box {
+  background: #0d2828;
+  border: 1px solid #1a4040;
+  border-radius: 16px;
+  padding: 28px 24px;
+  text-align: center;
+  width: 320px;
+  max-width: 95vw;
+}
+.modal-box h2 { font-size: 18px; margin-bottom: 4px; color: #e0f0f0; }
+.modal-box .org { font-size: 13px; color: #669090; margin-bottom: 6px; }
+.modal-box .type-lbl { font-size: 12px; color: #00c4b8; background: rgba(0,196,184,0.1); padding: 3px 12px; border-radius: 12px; display: inline-block; margin-bottom: 16px; }
+#qr-box { background: #fff; padding: 12px; border-radius: 10px; display: inline-block; margin-bottom: 14px; }
+#qr-box canvas, #qr-box img { display: block !important; }
+.pin-display { background: #081818; border: 1px solid #1a4040; border-radius: 9px; padding: 10px 16px; margin-bottom: 16px; }
+.pin-display .pin-lbl { font-size: 10px; color: #669090; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+.pin-display .pin-val { font-size: 30px; font-weight: bold; color: #00e8d8; letter-spacing: 8px; font-family: monospace; }
+.modal-btns { display: flex; gap: 8px; justify-content: center; }
+.btn-dl { padding: 10px 20px; background: #00c4b8; color: #000; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 13px; }
+.btn-dl:hover { background: #00e8d8; }
+.btn-close { padding: 10px 18px; background: #1a3030; border: 1px solid #1a4040; color: #e0f0f0; border-radius: 8px; cursor: pointer; font-size: 13px; }
+.btn-close:hover { border-color: #f87171; color: #f87171; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Besiktas Belediyesi — Davetiye Yonetimi</h1>
+  <a href="scanner.html">Kapi Kontrol &rarr;</a>
+</header>
+
+<div class="stats">
+  <div class="stat"><div class="n" id="s-total">0</div><div class="l">Toplam</div></div>
+  <div class="stat"><div class="n" id="s-in">0</div><div class="l">Girdi</div></div>
+  <div class="stat"><div class="n" id="s-wait">0</div><div class="l">Bekliyor</div></div>
+  <div class="stat"><div class="n" id="s-vip">0</div><div class="l">VIP</div></div>
+</div>
+
+<div class="container">
+  <div class="form-panel">
+    <h2>+ Yeni Davetiye</h2>
+    <label>Ad Soyad *</label>
+    <input type="text" id="f-name" placeholder="Ornek: Ahmet Yilmaz">
+    <label>Kurum</label>
+    <input type="text" id="f-org" placeholder="Ornek: Belediye Baskanligi">
+    <label>Tip</label>
+    <select id="f-type">
+      <option value="VIP">VIP</option>
+      <option value="Basin">Basin</option>
+      <option value="Personel">Personel</option>
+      <option value="Misafir" selected>Misafir</option>
+    </select>
+    <label>Masa</label>
+    <input type="text" id="f-seat" placeholder="Ornek: A-12">
+    <button class="btn-create" onclick="createInvite()">Davetiye Olustur + QR Goster</button>
+  </div>
+
+  <div class="list-panel">
+    <div class="list-header">
+      <h2>Davetli Listesi</h2>
+      <input class="search" type="text" placeholder="Ara..." oninput="search(this.value)">
+    </div>
+    <div id="list-body"><div class="empty">Henuz davetiye yok.</div></div>
+  </div>
+</div>
+
+<!-- QR MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal-box">
+    <h2 id="m-name"></h2>
+    <div class="org" id="m-org"></div>
+    <div class="type-lbl" id="m-type"></div>
+    <div id="qr-box"></div>
+    <div class="pin-display">
+      <div class="pin-lbl">Manuel Giris PIN Kodu</div>
+      <div class="pin-val" id="m-pin"></div>
+    </div>
+    <div class="modal-btns">
+      <button class="btn-dl" onclick="downloadQR()">Indir</button>
+      <button class="btn-close" onclick="closeModal()">Kapat</button>
+    </div>
+  </div>
+</div>
+
+<script>
+var guests = JSON.parse(localStorage.getItem('bb_guests') || '[]');
+var activeGuest = null;
+
+function save() { localStorage.setItem('bb_guests', JSON.stringify(guests)); }
+
+function genId() {
+  return 'BBD' + Date.now().toString(36).toUpperCase() + Math.random().toString(36).substr(2,3).toUpperCase();
+}
+
+function genPin() {
+  return String(Math.floor(100000 + Math.random() * 900000));
+}
+
+function typeClass(t) {
+  if (t === 'VIP') return 't-vip';
+  if (t === 'Basin') return 't-basin';
+  if (t === 'Personel') return 't-personel';
+  return 't-misafir';
+}
+
+function updateStats() {
+  document.getElementById('s-total').textContent = guests.length;
+  var inn = 0, vip = 0;
+  for (var i = 0; i < guests.length; i++) {
+    if (guests[i].checked) inn++;
+    if (guests[i].type === 'VIP') vip++;
+  }
+  document.getElementById('s-in').textContent = inn;
+  document.getElementById('s-wait').textContent = guests.length - inn;
+  document.getElementById('s-vip').textContent = vip;
+}
+
+function renderList(list) {
+  var el = document.getElementById('list-body');
+  if (!list.length) { el.innerHTML = '<div class="empty">Davetli bulunamadi.</div>'; return; }
+  var html = '<table><thead><tr><th>Ad Soyad</th><th>PIN</th><th>Tip</th><th>Durum</th><th></th></tr></thead><tbody>';
+  for (var i = 0; i < list.length; i++) {
+    var g = list[i];
+    html += '<tr>';
+    html += '<td><strong>' + g.name + '</strong><br><span style="color:#669090;font-size:11px">' + (g.org || '') + '</span></td>';
+    html += '<td><span class="pin">' + g.pin + '</span></td>';
+    html += '<td><span class="type-badge ' + typeClass(g.type) + '">' + g.type + '</span></td>';
+    html += '<td class="' + (g.checked ? 'status-ok' : 'status-wait') + '">' + (g.checked ? 'Girdi' : 'Bekliyor') + '</td>';
+    html += '<td><button class="btn-qr" onclick="showQR(\'' + g.id + '\')">QR Goster</button><button class="btn-del" onclick="delGuest(\'' + g.id + '\')">Sil</button></td>';
+    html += '</tr>';
+  }
+  html += '</tbody></table>';
+  el.innerHTML = html;
+}
+
+function search(q) {
+  var t = q.toLowerCase();
+  var filtered = guests.filter(function(g) {
+    return g.name.toLowerCase().indexOf(t) >= 0 || (g.org || '').toLowerCase().indexOf(t) >= 0;
+  });
+  renderList(filtered);
+}
+
+function createInvite() {
+  var name = document.getElementById('f-name').value.trim();
+  if (!name) { alert('Ad Soyad girin!'); return; }
+
+  var g = {
+    id: genId(),
+    pin: genPin(),
+    name: name,
+    org: document.getElementById('f-org').value.trim(),
+    type: document.getElementById('f-type').value,
+    seat: document.getElementById('f-seat').value.trim(),
+    checked: false
+  };
+
+  guests.unshift(g);
+  save();
+  updateStats();
+  renderList(guests);
+
+  document.getElementById('f-name').value = '';
+  document.getElementById('f-org').value = '';
+  document.getElementById('f-seat').value = '';
+
+  showQR(g.id);
+}
+
+function showQR(id) {
+  var g = null;
+  for (var i = 0; i < guests.length; i++) {
+    if (guests[i].id === id) { g = guests[i]; break; }
+  }
+  if (!g) return;
+  activeGuest = g;
+
+  document.getElementById('m-name').textContent = g.name;
+  document.getElementById('m-org').textContent = g.org || 'Besiktas Belediyesi';
+  document.getElementById('m-type').textContent = g.type;
+  document.getElementById('m-pin').textContent = g.pin;
+
+  var box = document.getElementById('qr-box');
+  box.innerHTML = '';
+
+  var data = JSON.stringify({ id: g.id, pin: g.pin, name: g.name, type: g.type });
+
+  try {
+    new QRCode(box, {
+      text: data,
+      width: 180,
+      height: 180,
+      colorDark: '#000000',
+      colorLight: '#ffffff',
+      correctLevel: QRCode.CorrectLevel.H
+    });
+  } catch(e) {
+    box.innerHTML = '<p style="color:red;padding:16px;font-size:12px">Hata: ' + e.message + '</p>';
+  }
+
+  document.getElementById('modal').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+}
+
+function downloadQR() {
+  var canvas = document.querySelector('#qr-box canvas');
+  if (!canvas) { alert('QR bulunamadi'); return; }
+  var a = document.createElement('a');
+  a.download = 'davetiye-' + (activeGuest ? activeGuest.pin : 'qr') + '.png';
+  a.href = canvas.toDataURL();
+  a.click();
+}
+
+function delGuest(id) {
+  if (!confirm('Silinsin mi?')) return;
+  guests = guests.filter(function(g) { return g.id !== id; });
+  save();
+  updateStats();
+  renderList(guests);
+}
+
+document.getElementById('modal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+updateStats();
+renderList(guests);
+</script>
+</body>
+</html>
