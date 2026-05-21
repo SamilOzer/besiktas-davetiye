@@ -2,496 +2,263 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="BB Davetiye">
-<meta name="theme-color" content="#e8c84a">
+<meta name="theme-color" content="#00c4b8">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-512.png">
-<title>Beşiktaş Belediyesi – Davetiye Yönetim Paneli</title>
+<title>Besiktas Belediyesi - Davetiye Yonetimi</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<script src="qrcode.min.js"></script>
+<script>var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this.parsedData=[];for(var b=[],d=0,e=this.data.length;e>d;d++){var f=this.data.charCodeAt(d);f>65536?(b[0]=240|(1835008&f)>>>18,b[1]=128|(258048&f)>>>12,b[2]=128|(4032&f)>>>6,b[3]=128|63&f):f>2048?(b[0]=224|(61440&f)>>>12,b[1]=128|(4032&f)>>>6,b[2]=128|63&f):f>128?(b[0]=192|(1984&f)>>>6,b[1]=128|63&f):b[0]=f,this.parsedData=this.parsedData.concat(b)}this.parsedData.length!=this.data.length&&(this.parsedData.unshift(191),this.parsedData.unshift(187),this.parsedData.unshift(239))}function b(a,b){this.typeNumber=a,this.errorCorrectLevel=b,this.modules=null,this.moduleCount=0,this.dataCache=null,this.dataList=[]}function i(a,b){if(void 0==a.length)throw new Error(a.length+"/"+b);for(var c=0;c<a.length&&0==a[c];)c++;this.num=new Array(a.length-c+b);for(var d=0;d<a.length-c;d++)this.num[d]=a[d+c]}function j(a,b){this.totalCount=a,this.dataCount=b}function k(){this.buffer=[],this.length=0}function m(){return"undefined"!=typeof CanvasRenderingContext2D}function n(){var a=!1,b=navigator.userAgent;return/android/i.test(b)&&(a=!0,aMat=b.toString().match(/android ([0-9]\.[0-9])/i),aMat&&aMat[1]&&(a=parseFloat(aMat[1]))),a}function r(a,b){for(var c=1,e=s(a),f=0,g=l.length;g>=f;f++){var h=0;switch(b){case d.L:h=l[f][0];break;case d.M:h=l[f][1];break;case d.Q:h=l[f][2];break;case d.H:h=l[f][3]}if(h>=e)break;c++}if(c>l.length)throw new Error("Too long data");return c}function s(a){var b=encodeURI(a).toString().replace(/\%[0-9a-fA-F]{2}/g,"a");return b.length+(b.length!=a?3:0)}a.prototype={getLength:function(){return this.parsedData.length},write:function(a){for(var b=0,c=this.parsedData.length;c>b;b++)a.put(this.parsedData[b],8)}},b.prototype={addData:function(b){var c=new a(b);this.dataList.push(c),this.dataCache=null},isDark:function(a,b){if(0>a||this.moduleCount<=a||0>b||this.moduleCount<=b)throw new Error(a+","+b);return this.modules[a][b]},getModuleCount:function(){return this.moduleCount},make:function(){this.makeImpl(!1,this.getBestMaskPattern())},makeImpl:function(a,c){this.moduleCount=4*this.typeNumber+17,this.modules=new Array(this.moduleCount);for(var d=0;d<this.moduleCount;d++){this.modules[d]=new Array(this.moduleCount);for(var e=0;e<this.moduleCount;e++)this.modules[d][e]=null}this.setupPositionProbePattern(0,0),this.setupPositionProbePattern(this.moduleCount-7,0),this.setupPositionProbePattern(0,this.moduleCount-7),this.setupPositionAdjustPattern(),this.setupTimingPattern(),this.setupTypeInfo(a,c),this.typeNumber>=7&&this.setupTypeNumber(a),null==this.dataCache&&(this.dataCache=b.createData(this.typeNumber,this.errorCorrectLevel,this.dataList)),this.mapData(this.dataCache,c)},setupPositionProbePattern:function(a,b){for(var c=-1;7>=c;c++)if(!(-1>=a+c||this.moduleCount<=a+c))for(var d=-1;7>=d;d++)-1>=b+d||this.moduleCount<=b+d||(this.modules[a+c][b+d]=c>=0&&6>=c&&(0==d||6==d)||d>=0&&6>=d&&(0==c||6==c)||c>=2&&4>=c&&d>=2&&4>=d?!0:!1)},getBestMaskPattern:function(){for(var a=0,b=0,c=0;8>c;c++){this.makeImpl(!0,c);var d=f.getLostPoint(this);(0==c||a>d)&&(a=d,b=c)}return b},createMovieClip:function(a,b,c){var d=a.createEmptyMovieClip(b,c),e=1;this.make();for(var f=0;f<this.modules.length;f++)for(var g=f*e,h=0;h<this.modules[f].length;h++){var i=h*e,j=this.modules[f][h];j&&(d.beginFill(0,100),d.moveTo(i,g),d.lineTo(i+e,g),d.lineTo(i+e,g+e),d.lineTo(i,g+e),d.endFill())}return d},setupTimingPattern:function(){for(var a=8;a<this.moduleCount-8;a++)null==this.modules[a][6]&&(this.modules[a][6]=0==a%2);for(var b=8;b<this.moduleCount-8;b++)null==this.modules[6][b]&&(this.modules[6][b]=0==b%2)},setupPositionAdjustPattern:function(){for(var a=f.getPatternPosition(this.typeNumber),b=0;b<a.length;b++)for(var c=0;c<a.length;c++){var d=a[b],e=a[c];if(null==this.modules[d][e])for(var g=-2;2>=g;g++)for(var h=-2;2>=h;h++)this.modules[d+g][e+h]=-2==g||2==g||-2==h||2==h||0==g&&0==h?!0:!1}},setupTypeNumber:function(a){for(var b=f.getBCHTypeNumber(this.typeNumber),c=0;18>c;c++){var d=!a&&1==(1&b>>c);this.modules[Math.floor(c/3)][c%3+this.moduleCount-8-3]=d}for(var c=0;18>c;c++){var d=!a&&1==(1&b>>c);this.modules[c%3+this.moduleCount-8-3][Math.floor(c/3)]=d}},setupTypeInfo:function(a,b){for(var c=this.errorCorrectLevel<<3|b,d=f.getBCHTypeInfo(c),e=0;15>e;e++){var g=!a&&1==(1&d>>e);6>e?this.modules[e][8]=g:8>e?this.modules[e+1][8]=g:this.modules[this.moduleCount-15+e][8]=g}for(var e=0;15>e;e++){var g=!a&&1==(1&d>>e);8>e?this.modules[8][this.moduleCount-e-1]=g:9>e?this.modules[8][15-e-1+1]=g:this.modules[8][15-e-1]=g}this.modules[this.moduleCount-8][8]=!a},mapData:function(a,b){for(var c=-1,d=this.moduleCount-1,e=7,g=0,h=this.moduleCount-1;h>0;h-=2)for(6==h&&h--;;){for(var i=0;2>i;i++)if(null==this.modules[d][h-i]){var j=!1;g<a.length&&(j=1==(1&a[g]>>>e));var k=f.getMask(b,d,h-i);k&&(j=!j),this.modules[d][h-i]=j,e--,-1==e&&(g++,e=7)}if(d+=c,0>d||this.moduleCount<=d){d-=c,c=-c;break}}}},b.PAD0=236,b.PAD1=17,b.createData=function(a,c,d){for(var e=j.getRSBlocks(a,c),g=new k,h=0;h<d.length;h++){var i=d[h];g.put(i.mode,4),g.put(i.getLength(),f.getLengthInBits(i.mode,a)),i.write(g)}for(var l=0,h=0;h<e.length;h++)l+=e[h].dataCount;if(g.getLengthInBits()>8*l)throw new Error("code length overflow. ("+g.getLengthInBits()+">"+8*l+")");for(g.getLengthInBits()+4<=8*l&&g.put(0,4);0!=g.getLengthInBits()%8;)g.putBit(!1);for(;;){if(g.getLengthInBits()>=8*l)break;if(g.put(b.PAD0,8),g.getLengthInBits()>=8*l)break;g.put(b.PAD1,8)}return b.createBytes(g,e)},b.createBytes=function(a,b){for(var c=0,d=0,e=0,g=new Array(b.length),h=new Array(b.length),j=0;j<b.length;j++){var k=b[j].dataCount,l=b[j].totalCount-k;d=Math.max(d,k),e=Math.max(e,l),g[j]=new Array(k);for(var m=0;m<g[j].length;m++)g[j][m]=255&a.buffer[m+c];c+=k;var n=f.getErrorCorrectPolynomial(l),o=new i(g[j],n.getLength()-1),p=o.mod(n);h[j]=new Array(n.getLength()-1);for(var m=0;m<h[j].length;m++){var q=m+p.getLength()-h[j].length;h[j][m]=q>=0?p.get(q):0}}for(var r=0,m=0;m<b.length;m++)r+=b[m].totalCount;for(var s=new Array(r),t=0,m=0;d>m;m++)for(var j=0;j<b.length;j++)m<g[j].length&&(s[t</script>
 <style>
-  :root {
-    --bg: #0a0a0f;
-    --surface: #12121a;
-    --surface2: #1c1c28;
-    --border: #2a2a3a;
-    --accent: #e8c84a;
-    --accent2: #f0d980;
-    --text: #f0f0f5;
-    --muted: #7a7a9a;
-    --success: #4ade80;
-    --danger: #f87171;
-    --radius: 14px;
-  }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body { background:var(--bg); color:var(--text); font-family:'Inter',sans-serif; min-height:100vh; }
-
-  /* HEADER */
-  header {
-    background: linear-gradient(135deg, #0a0a0f 0%, #16162a 100%);
-    border-bottom: 1px solid var(--border);
-    padding: 20px 40px;
-    display: flex; align-items: center; justify-content: space-between;
-  }
-  .logo-area { display:flex; align-items:center; gap:16px; }
-  .logo-badge {
-    width:52px; height:52px; border-radius:12px;
-    background: linear-gradient(135deg, var(--accent), #c8a820);
-    display:flex; align-items:center; justify-content:center;
-    font-size:22px; font-weight:800; color:#0a0a0f;
-  }
-  .logo-text h1 { font-size:18px; font-weight:700; letter-spacing:0.3px; }
-  .logo-text p { font-size:12px; color:var(--muted); margin-top:2px; }
-  .nav-links { display:flex; gap:12px; }
-  .nav-btn {
-    padding:9px 20px; border-radius:10px; font-size:13px; font-weight:600;
-    cursor:pointer; border:none; transition:all 0.2s; text-decoration:none;
-    display:inline-flex; align-items:center; gap:7px;
-  }
-  .nav-btn.primary { background:var(--accent); color:#0a0a0f; }
-  .nav-btn.primary:hover { background:var(--accent2); transform:translateY(-1px); }
-  .nav-btn.secondary { background:var(--surface2); color:var(--text); border:1px solid var(--border); }
-  .nav-btn.secondary:hover { border-color:var(--accent); color:var(--accent); }
-
-  /* STATS */
-  .stats-bar {
-    display:flex; gap:16px; padding:28px 40px 0;
-  }
-  .stat-card {
-    background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
-    padding:18px 24px; flex:1; display:flex; align-items:center; gap:16px;
-    transition:border-color 0.2s;
-  }
-  .stat-card:hover { border-color:var(--accent); }
-  .stat-icon { font-size:28px; }
-  .stat-val { font-size:26px; font-weight:800; }
-  .stat-label { font-size:12px; color:var(--muted); margin-top:2px; }
-
-  /* MAIN LAYOUT */
-  main { padding:28px 40px; display:grid; grid-template-columns:420px 1fr; gap:24px; }
-
-  /* FORM PANEL */
-  .panel {
-    background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:28px;
-  }
-  .panel-title {
-    font-size:15px; font-weight:700; margin-bottom:22px;
-    display:flex; align-items:center; gap:8px; color:var(--text);
-  }
-  .panel-title span { color:var(--accent); font-size:18px; }
-
-  .field { margin-bottom:16px; }
-  .field label { display:block; font-size:12px; font-weight:600; color:var(--muted); margin-bottom:7px; letter-spacing:0.5px; text-transform:uppercase; }
-  .field input, .field select {
-    width:100%; padding:12px 16px; background:var(--bg); border:1px solid var(--border);
-    border-radius:10px; color:var(--text); font-size:14px; font-family:'Inter',sans-serif;
-    transition:border-color 0.2s, box-shadow 0.2s; outline:none;
-  }
-  .field input:focus, .field select:focus {
-    border-color:var(--accent); box-shadow:0 0 0 3px rgba(232,200,74,0.12);
-  }
-  .field select option { background:var(--surface2); }
-  .row2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-
-  .btn-create {
-    width:100%; padding:14px; background:linear-gradient(135deg,var(--accent),#c8a820);
-    color:#0a0a0f; border:none; border-radius:10px; font-size:15px; font-weight:700;
-    cursor:pointer; transition:all 0.2s; margin-top:6px; display:flex; align-items:center; justify-content:center; gap:8px;
-  }
-  .btn-create:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(232,200,74,0.3); }
-
-  /* QR PREVIEW POPUP */
-  .qr-preview {
-    display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8);
-    backdrop-filter:blur(8px); z-index:1000; align-items:center; justify-content:center;
-  }
-  .qr-preview.open { display:flex; }
-  .qr-card {
-    background:var(--surface); border:1px solid var(--border); border-radius:20px;
-    padding:36px; max-width:400px; width:90%; text-align:center;
-    animation:popIn 0.3s cubic-bezier(0.34,1.56,0.64,1);
-  }
-  @keyframes popIn { from{opacity:0;transform:scale(0.85)} to{opacity:1;transform:scale(1)} }
-  .qr-card h2 { font-size:20px; font-weight:700; margin-bottom:4px; }
-  .qr-card .qr-subtitle { color:var(--muted); font-size:13px; margin-bottom:8px; }
-  .qr-card .qr-role {
-    display:inline-block; padding:4px 14px; border-radius:20px;
-    background:rgba(232,200,74,0.15); color:var(--accent); font-size:12px; font-weight:600;
-    margin-bottom:24px;
-  }
-  #qr-container { background:#fff; padding:16px; border-radius:12px; display:inline-block; margin-bottom:20px; }
-  .qr-actions { display:flex; gap:10px; justify-content:center; margin-top:8px; }
-  .qr-btn {
-    padding:10px 20px; border-radius:10px; font-size:13px; font-weight:600;
-    cursor:pointer; border:none; transition:all 0.2s;
-  }
-  .qr-btn.dl { background:var(--accent); color:#0a0a0f; }
-  .qr-btn.dl:hover { background:var(--accent2); }
-  .qr-btn.cls { background:var(--surface2); color:var(--text); border:1px solid var(--border); }
-  .qr-btn.cls:hover { border-color:var(--danger); color:var(--danger); }
-
-  /* GUEST LIST */
-  .list-panel { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; }
-  .list-header {
-    padding:20px 24px; border-bottom:1px solid var(--border);
-    display:flex; align-items:center; justify-content:space-between;
-  }
-  .list-header-title { font-size:15px; font-weight:700; display:flex; align-items:center; gap:8px; }
-  .search-box {
-    padding:9px 16px; background:var(--bg); border:1px solid var(--border);
-    border-radius:9px; color:var(--text); font-size:13px; font-family:'Inter',sans-serif;
-    outline:none; width:220px; transition:border-color 0.2s;
-  }
-  .search-box:focus { border-color:var(--accent); }
-
-  table { width:100%; border-collapse:collapse; }
-  th {
-    padding:12px 20px; text-align:left; font-size:11px; font-weight:600;
-    color:var(--muted); text-transform:uppercase; letter-spacing:0.6px;
-    border-bottom:1px solid var(--border); background:var(--bg);
-  }
-  td { padding:14px 20px; font-size:13px; border-bottom:1px solid rgba(42,42,58,0.5); vertical-align:middle; }
-  tr:last-child td { border-bottom:none; }
-  tr:hover td { background:rgba(255,255,255,0.02); }
-  .badge {
-    display:inline-flex; align-items:center; gap:5px; padding:4px 10px;
-    border-radius:20px; font-size:11px; font-weight:600;
-  }
-  .badge.checked { background:rgba(74,222,128,0.12); color:var(--success); }
-  .badge.pending { background:rgba(232,200,74,0.12); color:var(--accent); }
-  .badge.vip { background:rgba(168,85,247,0.15); color:#c084fc; }
-  .badge.press { background:rgba(56,189,248,0.15); color:#7dd3fc; }
-  .badge.staff { background:rgba(251,146,60,0.15); color:#fb923c; }
-  .badge.guest { background:rgba(148,163,184,0.15); color:#94a3b8; }
-  .action-btns { display:flex; gap:6px; }
-  .action-btn {
-    padding:6px 12px; border-radius:8px; font-size:11px; font-weight:600;
-    cursor:pointer; border:none; transition:all 0.2s;
-  }
-  .action-btn.show { background:rgba(232,200,74,0.1); color:var(--accent); border:1px solid rgba(232,200,74,0.2); }
-  .action-btn.show:hover { background:rgba(232,200,74,0.2); }
-  .action-btn.del { background:rgba(248,113,113,0.1); color:var(--danger); border:1px solid rgba(248,113,113,0.2); }
-  .action-btn.del:hover { background:rgba(248,113,113,0.2); }
-  .empty-state { text-align:center; padding:60px 20px; color:var(--muted); }
-  .empty-state .empty-icon { font-size:48px; margin-bottom:12px; }
-  .empty-state p { font-size:14px; }
-
-  /* TOAST */
-  .toast {
-    position:fixed; bottom:30px; right:30px; z-index:9999;
-    background:var(--surface2); border:1px solid var(--border); border-radius:12px;
-    padding:14px 20px; font-size:13px; font-weight:500; display:flex; align-items:center; gap:10px;
-    transform:translateY(100px); opacity:0; transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1);
-  }
-  .toast.show { transform:translateY(0); opacity:1; }
-  .toast.success { border-color:var(--success); }
-  .toast.error { border-color:var(--danger); }
-
-  /* MOBILE */
-  @media(max-width:768px) {
-    header { padding:14px 16px; }
-    .logo-text h1 { font-size:14px; }
-    .logo-text p { display:none; }
-    .nav-links { gap:8px; }
-    .nav-btn { padding:8px 12px; font-size:12px; }
-    .stats-bar { padding:16px 16px 0; gap:10px; flex-wrap:wrap; }
-    .stat-card { min-width:calc(50% - 5px); padding:14px 16px; }
-    .stat-val { font-size:20px; }
-    main { padding:16px; grid-template-columns:1fr; }
-    .list-header { flex-direction:column; align-items:flex-start; gap:10px; }
-    .search-box { width:100%; }
-    th:nth-child(2), td:nth-child(2),
-    th:nth-child(4), td:nth-child(4) { display:none; }
-    td, th { padding:10px 12px; }
-    .qr-card { padding:24px 20px; }
-    .toast { bottom:20px; right:16px; left:16px; }
-    .field input, .field select { font-size:16px; }
-  }
-  @media(max-width:400px) {
-    th:nth-child(3), td:nth-child(3) { display:none; }
-  }
+:root{--bg:#060e0e;--sf:#0d1c1c;--sf2:#122222;--brd:#1a3232;--ac:#00c4b8;--ac2:#00e8d8;--tx:#eefafa;--mt:#5a8888;--ok:#4ade80;--er:#f87171;--wn:#fb923c;--r:14px;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--tx);font-family:Inter,sans-serif;min-height:100vh;}
+header{background:linear-gradient(135deg,#060e0e,#0d2020);border-bottom:1px solid var(--brd);padding:16px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+.logo-area{display:flex;align-items:center;gap:12px;}
+.logo-badge{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--ac),#009990);display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:800;color:#fff;flex-shrink:0;}
+.logo-text h1{font-size:15px;font-weight:700;}
+.logo-text p{font-size:11px;color:var(--mt);margin-top:1px;}
+.nav-links{display:flex;gap:8px;}
+.nav-btn{padding:8px 14px;border-radius:9px;font-size:12px;font-weight:600;cursor:pointer;border:none;transition:all .2s;text-decoration:none;display:inline-flex;align-items:center;gap:6px;}
+.nav-btn.primary{background:var(--ac);color:#fff;}.nav-btn.primary:hover{background:var(--ac2);transform:translateY(-1px);}
+.nav-btn.secondary{background:var(--sf2);color:var(--tx);border:1px solid var(--brd);}.nav-btn.secondary:hover{border-color:var(--ac);color:var(--ac);}
+.stats-bar{display:flex;gap:12px;padding:18px 20px 0;flex-wrap:wrap;}
+.stat-card{background:var(--sf);border:1px solid var(--brd);border-radius:var(--r);padding:14px 16px;flex:1;min-width:110px;display:flex;align-items:center;gap:12px;transition:border-color .2s;}
+.stat-card:hover{border-color:var(--ac);}
+.stat-icon{font-size:22px;}.stat-val{font-size:22px;font-weight:800;}.stat-label{font-size:11px;color:var(--mt);margin-top:1px;}
+main{padding:18px 20px;display:grid;grid-template-columns:360px 1fr;gap:18px;}
+@media(max-width:780px){main{grid-template-columns:1fr;}}
+.panel{background:var(--sf);border:1px solid var(--brd);border-radius:var(--r);padding:20px;}
+.panel-title{font-size:14px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px;color:var(--ac);}
+.field{margin-bottom:13px;}
+.field label{display:block;font-size:10px;font-weight:600;color:var(--mt);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px;}
+.field input,.field select{width:100%;padding:11px 13px;background:var(--bg);border:1px solid var(--brd);border-radius:9px;color:var(--tx);font-size:14px;font-family:Inter,sans-serif;transition:border-color .2s;outline:none;}
+.field input:focus,.field select:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(0,196,184,.1);}
+.field select option{background:var(--sf2);}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.btn-create{width:100%;padding:13px;background:linear-gradient(135deg,var(--ac),#009990);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;margin-top:4px;display:flex;align-items:center;justify-content:center;gap:8px;}
+.btn-create:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,196,184,.3);}
+.btn-create:active{transform:scale(.97);}
+/* QR POPUP */
+.qr-preview{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);z-index:1000;align-items:center;justify-content:center;padding:16px;}
+.qr-preview.open{display:flex;}
+.qr-card{background:var(--sf);border:1px solid var(--brd);border-radius:20px;padding:24px 20px;max-width:360px;width:100%;text-align:center;animation:popIn .3s cubic-bezier(.34,1.56,.64,1);}
+@keyframes popIn{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
+.qr-card h2{font-size:17px;font-weight:700;margin-bottom:3px;}
+.qr-card .qr-sub{color:var(--mt);font-size:12px;margin-bottom:6px;}
+.qr-role{display:inline-block;padding:3px 12px;border-radius:20px;background:rgba(0,196,184,.15);color:var(--ac);font-size:11px;font-weight:600;margin-bottom:14px;}
+#qr-container{background:#fff;padding:12px;border-radius:10px;display:inline-block;margin-bottom:12px;min-width:180px;min-height:180px;}
+#qr-container canvas,#qr-container img{display:block !important;}
+.pin-box{background:var(--bg);border:1px solid var(--brd);border-radius:10px;padding:10px 14px;margin-bottom:14px;}
+.pin-label{font-size:10px;color:var(--mt);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;}
+.pin-code{font-size:28px;font-weight:800;letter-spacing:8px;color:var(--ac);font-family:monospace;}
+.qr-actions{display:flex;gap:8px;justify-content:center;}
+.qr-btn{padding:10px 16px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .2s;}
+.qr-btn.dl{background:var(--ac);color:#fff;}.qr-btn.dl:hover{background:var(--ac2);}
+.qr-btn.cls{background:var(--sf2);color:var(--tx);border:1px solid var(--brd);}.qr-btn.cls:hover{border-color:var(--er);color:var(--er);}
+/* LIST */
+.list-panel{background:var(--sf);border:1px solid var(--brd);border-radius:var(--r);overflow:hidden;}
+.list-header{padding:14px 18px;border-bottom:1px solid var(--brd);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+.list-header-title{font-size:14px;font-weight:700;}
+.search-box{padding:8px 13px;background:var(--bg);border:1px solid var(--brd);border-radius:8px;color:var(--tx);font-size:13px;font-family:Inter,sans-serif;outline:none;width:190px;transition:border-color .2s;}
+.search-box:focus{border-color:var(--ac);}
+table{width:100%;border-collapse:collapse;}
+th{padding:10px 14px;text-align:left;font-size:10px;font-weight:600;color:var(--mt);text-transform:uppercase;letter-spacing:.6px;border-bottom:1px solid var(--brd);background:var(--bg);}
+td{padding:12px 14px;font-size:13px;border-bottom:1px solid rgba(26,50,50,.5);vertical-align:middle;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:rgba(0,196,184,.03);}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600;}
+.badge.checked{background:rgba(74,222,128,.12);color:var(--ok);}.badge.pending{background:rgba(0,196,184,.12);color:var(--ac);}
+.badge.vip{background:rgba(168,85,247,.15);color:#c084fc;}.badge.press{background:rgba(56,189,248,.15);color:#7dd3fc;}
+.badge.staff{background:rgba(251,146,60,.15);color:var(--wn);}.badge.guest{background:rgba(148,163,184,.15);color:#94a3b8;}
+.pin-cell{font-family:monospace;font-weight:700;color:var(--ac);letter-spacing:3px;font-size:14px;}
+.action-btns{display:flex;gap:5px;}
+.action-btn{padding:5px 10px;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer;border:none;transition:all .2s;}
+.action-btn.show{background:rgba(0,196,184,.1);color:var(--ac);border:1px solid rgba(0,196,184,.2);}.action-btn.show:hover{background:rgba(0,196,184,.2);}
+.action-btn.del{background:rgba(248,113,113,.1);color:var(--er);border:1px solid rgba(248,113,113,.2);}.action-btn.del:hover{background:rgba(248,113,113,.2);}
+.empty-state{text-align:center;padding:50px 20px;color:var(--mt);}
+.empty-icon{font-size:44px;margin-bottom:10px;}
+.toast{position:fixed;bottom:24px;right:16px;left:16px;max-width:360px;margin:0 auto;z-index:9999;background:var(--sf2);border:1px solid var(--brd);border-radius:11px;padding:12px 16px;font-size:13px;font-weight:500;display:flex;align-items:center;gap:8px;transform:translateY(100px);opacity:0;transition:all .4s cubic-bezier(.34,1.56,.64,1);}
+.toast.show{transform:translateY(0);opacity:1;}.toast.success{border-color:var(--ok);}.toast.error{border-color:var(--er);}
+@media(max-width:600px){th:nth-child(2),td:nth-child(2){display:none;}.stats-bar{gap:8px;}.stat-val{font-size:18px;}}
 </style>
 </head>
 <body>
-
 <header>
   <div class="logo-area">
-    <div class="logo-badge">BŞ</div>
+    <div class="logo-badge">BB</div>
     <div class="logo-text">
-      <h1>Beşiktaş Belediyesi</h1>
-      <p>Davetiye Yönetim Sistemi — Lansman 2026</p>
+      <h1>Besiktas Belediyesi</h1>
+      <p>Davetiye Yonetim - Lansman 2026</p>
     </div>
   </div>
   <div class="nav-links">
-    <a href="scanner.html" class="nav-btn secondary">📷 Kapı Kontrol Paneli</a>
-    <button class="nav-btn primary" onclick="exportCSV()">⬇️ CSV Dışa Aktar</button>
+    <a href="scanner.html" class="nav-btn secondary">&#128247; Kapi Kontrol</a>
+    <button class="nav-btn primary" onclick="exportCSV()">&#8595; Disari Aktar</button>
   </div>
 </header>
 
 <div class="stats-bar">
-  <div class="stat-card">
-    <div class="stat-icon">🎟️</div>
-    <div>
-      <div class="stat-val" id="stat-total">0</div>
-      <div class="stat-label">Toplam Davetli</div>
-    </div>
-  </div>
-  <div class="stat-card">
-    <div class="stat-icon">✅</div>
-    <div>
-      <div class="stat-val" id="stat-checked">0</div>
-      <div class="stat-label">Giriş Yaptı</div>
-    </div>
-  </div>
-  <div class="stat-card">
-    <div class="stat-icon">⏳</div>
-    <div>
-      <div class="stat-val" id="stat-pending">0</div>
-      <div class="stat-label">Bekleniyor</div>
-    </div>
-  </div>
-  <div class="stat-card">
-    <div class="stat-icon">👑</div>
-    <div>
-      <div class="stat-val" id="stat-vip">0</div>
-      <div class="stat-label">VIP Davetli</div>
-    </div>
-  </div>
+  <div class="stat-card"><div class="stat-icon">&#127903;</div><div><div class="stat-val" id="stat-total">0</div><div class="stat-label">Toplam</div></div></div>
+  <div class="stat-card"><div class="stat-icon">&#10003;</div><div><div class="stat-val" id="stat-checked">0</div><div class="stat-label">Girdi</div></div></div>
+  <div class="stat-card"><div class="stat-icon">&#9200;</div><div><div class="stat-val" id="stat-pending">0</div><div class="stat-label">Bekliyor</div></div></div>
+  <div class="stat-card"><div class="stat-icon">&#128081;</div><div><div class="stat-val" id="stat-vip">0</div><div class="stat-label">VIP</div></div></div>
 </div>
 
 <main>
-  <!-- FORM -->
   <div class="panel">
-    <div class="panel-title"><span>✦</span> Yeni Davetiye Oluştur</div>
-    <div class="field">
-      <label>Ad Soyad *</label>
-      <input type="text" id="f-name" placeholder="Örn: Ahmet Yılmaz" />
-    </div>
-    <div class="field">
-      <label>Kurum / Ünvan</label>
-      <input type="text" id="f-org" placeholder="Örn: Beşiktaş Belediye Başkanı" />
-    </div>
+    <div class="panel-title">&#10022; Yeni Davetiye Olustur</div>
+    <div class="field"><label>Ad Soyad *</label><input type="text" id="f-name" placeholder="Ornek: Ahmet Yilmaz"></div>
+    <div class="field"><label>Kurum / Unvan</label><input type="text" id="f-org" placeholder="Ornek: Belediye Baskani"></div>
     <div class="row2">
-      <div class="field">
-        <label>Davetli Tipi *</label>
+      <div class="field"><label>Davetli Tipi</label>
         <select id="f-type">
-          <option value="VIP">👑 VIP</option>
-          <option value="Basın">📰 Basın</option>
-          <option value="Personel">🔧 Personel</option>
-          <option value="Misafir" selected>🎟️ Misafir</option>
+          <option value="VIP">VIP</option>
+          <option value="Basin">Basin</option>
+          <option value="Personel">Personel</option>
+          <option value="Misafir" selected>Misafir</option>
         </select>
       </div>
-      <div class="field">
-        <label>Masa / Alan</label>
-        <input type="text" id="f-seat" placeholder="Örn: A-12" />
-      </div>
+      <div class="field"><label>Masa / Alan</label><input type="text" id="f-seat" placeholder="A-12"></div>
     </div>
-    <div class="field">
-      <label>E-posta</label>
-      <input type="email" id="f-email" placeholder="davetli@ornek.com" />
-    </div>
-    <div class="field">
-      <label>Telefon</label>
-      <input type="tel" id="f-phone" placeholder="+90 5XX XXX XX XX" />
-    </div>
-    <button class="btn-create" onclick="createInvite()">✨ Davetiye Oluştur & QR Göster</button>
+    <div class="field"><label>E-posta</label><input type="email" id="f-email" placeholder="ornek@mail.com"></div>
+    <div class="field"><label>Telefon</label><input type="tel" id="f-phone" placeholder="+90 5XX XXX XX XX"></div>
+    <button class="btn-create" onclick="createInvite()">&#10024; Davetiye Olustur ve QR Goster</button>
   </div>
 
-  <!-- LIST -->
   <div class="list-panel">
     <div class="list-header">
-      <div class="list-header-title">📋 Davetli Listesi</div>
-      <input class="search-box" type="text" placeholder="🔍 İsim veya kurum ara..." oninput="filterGuests(this.value)" />
+      <div class="list-header-title">&#128203; Davetli Listesi</div>
+      <input class="search-box" type="text" placeholder="&#128269; Isim ara..." oninput="filterGuests(this.value)">
     </div>
     <div id="table-wrapper">
-      <div class="empty-state">
-        <div class="empty-icon">🎪</div>
-        <p>Henüz davetiye oluşturulmadı.<br>Sol panelden yeni davetiye ekleyin.</p>
-      </div>
+      <div class="empty-state"><div class="empty-icon">&#127914;</div><p>Henuz davetiye olusturulmadi.</p></div>
     </div>
   </div>
 </main>
 
-<!-- QR POPUP -->
 <div class="qr-preview" id="qr-popup">
   <div class="qr-card">
-    <h2 id="qr-name">—</h2>
-    <p class="qr-subtitle" id="qr-org">—</p>
-    <span class="qr-role" id="qr-role">—</span>
-    <br>
+    <h2 id="qr-name">-</h2>
+    <p class="qr-sub" id="qr-org">-</p>
+    <span class="qr-role" id="qr-role">-</span><br>
     <div id="qr-container"></div>
-    <p style="font-size:11px;color:var(--muted);margin-bottom:16px;" id="qr-id-label">—</p>
+    <div class="pin-box">
+      <div class="pin-label">Manuel Giris PIN Kodu</div>
+      <div class="pin-code" id="qr-pin">------</div>
+    </div>
     <div class="qr-actions">
-      <button class="qr-btn dl" onclick="downloadQR()">⬇️ İndir</button>
-      <button class="qr-btn cls" onclick="closeQR()">✕ Kapat</button>
+      <button class="qr-btn dl" onclick="downloadQR()">&#8595; Indir</button>
+      <button class="qr-btn cls" onclick="closeQR()">&#10005; Kapat</button>
     </div>
   </div>
 </div>
-
 <div class="toast" id="toast"></div>
 
 <script>
-let guests = JSON.parse(localStorage.getItem('bb_guests') || '[]');
-let currentQRGuest = null;
-
-function save() {
-  localStorage.setItem('bb_guests', JSON.stringify(guests));
-}
-
-function uid() {
-  return 'BBD-' + Date.now().toString(36).toUpperCase() + '-' + Math.random().toString(36).substr(2,4).toUpperCase();
-}
-
-function typeClass(t) {
-  const m = { VIP:'vip', Basın:'press', Personel:'staff', Misafir:'guest' };
-  return m[t] || 'guest';
-}
-
-function typeEmoji(t) {
-  const m = { VIP:'👑', Basın:'📰', Personel:'🔧', Misafir:'🎟️' };
-  return m[t] || '🎟️';
-}
-
-function toast(msg, type='success') {
-  const el = document.getElementById('toast');
-  el.className = 'toast ' + type;
-  el.innerHTML = (type === 'success' ? '✅' : '❌') + ' ' + msg;
+var guests=JSON.parse(localStorage.getItem('bb_guests')||'[]');
+var currentQRGuest=null;
+function save(){localStorage.setItem('bb_guests',JSON.stringify(guests));}
+function uid(){return 'BBD-'+Date.now().toString(36).toUpperCase()+'-'+Math.random().toString(36).substr(2,4).toUpperCase();}
+function genPin(){return Math.floor(100000+Math.random()*900000).toString();}
+function typeClass(t){return({VIP:'vip',Basin:'press',Personel:'staff',Misafir:'guest'})[t]||'guest';}
+function typeLabel(t){return({VIP:'VIP',Basin:'Basin',Personel:'Personel',Misafir:'Misafir'})[t]||t;}
+function toast(msg,type){
+  type=type||'success';
+  var el=document.getElementById('toast');
+  el.className='toast '+type;
+  el.innerHTML=(type==='success'?'&#10003; ':'&#10007; ')+msg;
   el.classList.add('show');
-  setTimeout(() => el.classList.remove('show'), 3000);
+  setTimeout(function(){el.classList.remove('show');},3000);
 }
-
-function updateStats() {
-  document.getElementById('stat-total').textContent = guests.length;
-  document.getElementById('stat-checked').textContent = guests.filter(g=>g.checked).length;
-  document.getElementById('stat-pending').textContent = guests.filter(g=>!g.checked).length;
-  document.getElementById('stat-vip').textContent = guests.filter(g=>g.type==='VIP').length;
+function updateStats(){
+  document.getElementById('stat-total').textContent=guests.length;
+  document.getElementById('stat-checked').textContent=guests.filter(function(g){return g.checked;}).length;
+  document.getElementById('stat-pending').textContent=guests.filter(function(g){return !g.checked;}).length;
+  document.getElementById('stat-vip').textContent=guests.filter(function(g){return g.type==='VIP';}).length;
 }
-
-function renderTable(list) {
-  const wrap = document.getElementById('table-wrapper');
-  if (!list.length) {
-    wrap.innerHTML = `<div class="empty-state"><div class="empty-icon">🔍</div><p>Sonuç bulunamadı.</p></div>`;
-    return;
-  }
-  let rows = list.map(g => `
-    <tr>
-      <td><strong>${g.name}</strong></td>
-      <td style="color:var(--muted)">${g.org || '—'}</td>
-      <td><span class="badge ${typeClass(g.type)}">${typeEmoji(g.type)} ${g.type}</span></td>
-      <td style="color:var(--muted)">${g.seat || '—'}</td>
-      <td><span class="badge ${g.checked?'checked':'pending'}">${g.checked?'✅ Girdi':'⏳ Bekliyor'}</span></td>
-      <td>
-        <div class="action-btns">
-          <button class="action-btn show" onclick="showQR('${g.id}')">QR Göster</button>
-          <button class="action-btn del" onclick="deleteGuest('${g.id}')">Sil</button>
-        </div>
-      </td>
-    </tr>`).join('');
-  wrap.innerHTML = `<table>
-    <thead><tr>
-      <th>Ad Soyad</th><th>Kurum</th><th>Tip</th><th>Masa</th><th>Durum</th><th>İşlemler</th>
-    </tr></thead>
-    <tbody>${rows}</tbody>
-  </table>`;
+function renderTable(list){
+  var wrap=document.getElementById('table-wrapper');
+  if(!list.length){wrap.innerHTML='<div class="empty-state"><div class="empty-icon">&#128269;</div><p>Sonuc bulunamadi.</p></div>';return;}
+  var rows=list.map(function(g){return '<tr>'
+    +'<td><strong>'+g.name+'</strong></td>'
+    +'<td style="color:var(--mt)">'+(g.org||'-')+'</td>'
+    +'<td><span class="badge '+typeClass(g.type)+'">'+typeLabel(g.type)+'</span></td>'
+    +'<td class="pin-cell">'+(g.pin||'------')+'</td>'
+    +'<td><span class="badge '+(g.checked?'checked':'pending')+'">'+(g.checked?'Girdi':'Bekliyor')+'</span></td>'
+    +'<td><div class="action-btns">'
+    +'<button class="action-btn show" onclick="showQR(''+g.id+'')">QR</button>'
+    +'<button class="action-btn del" onclick="deleteGuest(''+g.id+'')">Sil</button>'
+    +'</div></td></tr>';}).join('');
+  wrap.innerHTML='<table><thead><tr><th>Ad Soyad</th><th>Kurum</th><th>Tip</th><th>PIN</th><th>Durum</th><th>Islem</th></tr></thead><tbody>'+rows+'</tbody></table>';
 }
-
-function filterGuests(q) {
-  const term = q.toLowerCase();
-  const filtered = guests.filter(g =>
-    g.name.toLowerCase().includes(term) || (g.org||'').toLowerCase().includes(term)
-  );
-  renderTable(filtered);
+function filterGuests(q){
+  var t=q.toLowerCase();
+  renderTable(guests.filter(function(g){return g.name.toLowerCase().indexOf(t)>=0||(g.org||'').toLowerCase().indexOf(t)>=0;}));
 }
-
-function createInvite() {
-  const name = document.getElementById('f-name').value.trim();
-  if (!name) { toast('Ad Soyad zorunludur!', 'error'); return; }
-  const guest = {
-    id: uid(),
-    name,
-    org: document.getElementById('f-org').value.trim(),
-    type: document.getElementById('f-type').value,
-    seat: document.getElementById('f-seat').value.trim(),
-    email: document.getElementById('f-email').value.trim(),
-    phone: document.getElementById('f-phone').value.trim(),
-    checked: false,
-    createdAt: new Date().toISOString()
+function createInvite(){
+  var name=document.getElementById('f-name').value.trim();
+  if(!name){toast('Ad Soyad zorunludur!','error');return;}
+  var guest={
+    id:uid(),pin:genPin(),name:name,
+    org:document.getElementById('f-org').value.trim(),
+    type:document.getElementById('f-type').value,
+    seat:document.getElementById('f-seat').value.trim(),
+    email:document.getElementById('f-email').value.trim(),
+    phone:document.getElementById('f-phone').value.trim(),
+    checked:false,createdAt:new Date().toISOString()
   };
-  guests.unshift(guest);
-  save();
-  updateStats();
-  renderTable(guests);
-  // clear form
-  ['f-name','f-org','f-seat','f-email','f-phone'].forEach(id => document.getElementById(id).value='');
-  toast(`${name} için davetiye oluşturuldu!`);
+  guests.unshift(guest);save();updateStats();renderTable(guests);
+  ['f-name','f-org','f-seat','f-email','f-phone'].forEach(function(id){document.getElementById(id).value='';});
+  toast(name+' icin davetiye olusturuldu!');
   showQR(guest.id);
 }
-
-function showQR(id) {
-  const g = guests.find(x => x.id === id);
-  if (!g) return;
-  currentQRGuest = g;
-  document.getElementById('qr-name').textContent = g.name;
-  document.getElementById('qr-org').textContent = g.org || 'Beşiktaş Belediyesi Lansman 2026';
-  document.getElementById('qr-role').textContent = typeEmoji(g.type) + ' ' + g.type;
-  document.getElementById('qr-id-label').textContent = 'Davetiye No: ' + g.id;
-  const container = document.getElementById('qr-container');
-  container.innerHTML = '';
-  const payload = JSON.stringify({ id: g.id, name: g.name, type: g.type });
-  new QRCode(container, { text: payload, width: 200, height: 200, colorDark:'#000', colorLight:'#fff', correctLevel: QRCode.CorrectLevel.H });
+function showQR(id){
+  var g=guests.find(function(x){return x.id===id;});
+  if(!g)return;
+  currentQRGuest=g;
+  document.getElementById('qr-name').textContent=g.name;
+  document.getElementById('qr-org').textContent=g.org||'Besiktas Belediyesi Lansman 2026';
+  document.getElementById('qr-role').textContent=typeLabel(g.type);
+  document.getElementById('qr-pin').textContent=g.pin||'------';
+  var container=document.getElementById('qr-container');
+  container.innerHTML='';
+  try{
+    var payload=JSON.stringify({id:g.id,pin:g.pin,name:g.name,type:g.type});
+    new QRCode(container,{text:payload,width:180,height:180,colorDark:'#000000',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.H});
+  }catch(e){container.innerHTML='<p style="color:red;padding:20px;font-size:12px">QR Hatasi: '+e.message+'</p>';}
   document.getElementById('qr-popup').classList.add('open');
 }
-
-function closeQR() {
-  document.getElementById('qr-popup').classList.remove('open');
+function closeQR(){document.getElementById('qr-popup').classList.remove('open');}
+function downloadQR(){
+  var canvas=document.querySelector('#qr-container canvas');
+  if(!canvas){toast('QR gorsel bulunamadi','error');return;}
+  var link=document.createElement('a');
+  link.download='davetiye-'+(currentQRGuest?currentQRGuest.pin:'qr')+'.png';
+  link.href=canvas.toDataURL();link.click();
 }
-
-function downloadQR() {
-  const canvas = document.querySelector('#qr-container canvas');
-  if (!canvas) return;
-  const link = document.createElement('a');
-  link.download = `davetiye-${currentQRGuest.id}.png`;
-  link.href = canvas.toDataURL();
-  link.click();
+function deleteGuest(id){
+  if(!confirm('Bu davetiyeyi silmek istediginizden emin misiniz?'))return;
+  guests=guests.filter(function(g){return g.id!==id;});
+  save();updateStats();renderTable(guests);
+  toast('Davetiye silindi.','error');
 }
-
-function deleteGuest(id) {
-  if (!confirm('Bu davetiyeyi silmek istediğinizden emin misiniz?')) return;
-  guests = guests.filter(g => g.id !== id);
-  save();
-  updateStats();
-  renderTable(guests);
-  toast('Davetiye silindi.', 'error');
+function exportCSV(){
+  if(!guests.length){toast('Davetli yok.','error');return;}
+  var h=['ID','PIN','Ad Soyad','Kurum','Tip','Masa','E-posta','Telefon','Durum','Tarih'];
+  var r=guests.map(function(g){return[g.id,g.pin,g.name,g.org,g.type,g.seat,g.email,g.phone,g.checked?'Girdi':'Bekliyor',g.createdAt];});
+  var csv=[h].concat(r).map(function(row){return row.map(function(c){return'"'+(c||'')+'"';}).join(',');}).join('\n');
+  var blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'});
+  var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='davetliler.csv';a.click();
+  toast('CSV indirildi!');
 }
-
-function exportCSV() {
-  if (!guests.length) { toast('Dışa aktarılacak davetli yok.', 'error'); return; }
-  const headers = ['ID','Ad Soyad','Kurum','Tip','Masa','E-posta','Telefon','Durum','Oluşturulma'];
-  const rows = guests.map(g => [g.id, g.name, g.org, g.type, g.seat, g.email, g.phone, g.checked?'Girdi':'Bekliyor', g.createdAt]);
-  const csv = [headers, ...rows].map(r => r.map(c => `"${c||''}"`).join(',')).join('\n');
-  const blob = new Blob(['\ufeff'+csv], {type:'text/csv;charset=utf-8'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = 'davetliler.csv'; a.click();
-  toast('CSV dışa aktarıldı!');
-}
-
-document.getElementById('qr-popup').addEventListener('click', function(e) {
-  if (e.target === this) closeQR();
-});
-
-// init
-updateStats();
-renderTable(guests);
-
-// PWA Service Worker
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js').catch(() => {});
-}
+document.getElementById('qr-popup').addEventListener('click',function(e){if(e.target===this)closeQR();});
+if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js').catch(function(){});}
+updateStats();renderTable(guests);
 </script>
 </body>
 </html>
